@@ -11,16 +11,16 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class JmsTransactionConventionConfig {
-    @Autowired
-    private BusConfiguration configuration;
+   @Autowired
+   private BusConfiguration configuration;
 
-    @Bean
-    public TransactionConvention transactionConvention() {
-        return new JmsTransactionManagerConvention();
-    }
+   @Bean
+   public TransactionConvention transactionConvention() {
+      return new JmsTransactionManagerConvention();
+   }
 
-    @Bean
-    public TransactedPolicy transactedPolicy() {
-        return new AutomaticTransactionPolicy(configuration, transactionConvention());
-    }
+   @Bean
+   public TransactedPolicy transactedPolicy() {
+      return new AutomaticTransactionPolicy(configuration, transactionConvention());
+   }
 }

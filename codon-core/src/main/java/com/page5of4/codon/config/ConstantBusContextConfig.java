@@ -12,24 +12,24 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import(value = {PublisherConfig.class})
+@Import(value = { PublisherConfig.class })
 public class ConstantBusContextConfig {
-    @Autowired
-    private BusConfiguration busConfiguration;
-    @Autowired
-    private SubscriptionStorage subscriptionStorage;
+   @Autowired
+   private BusConfiguration busConfiguration;
+   @Autowired
+   private SubscriptionStorage subscriptionStorage;
 
-    @Bean
-    public BusContextProvider busContextProvider() {
-        return new ConstantBusContextProvider(busContext());
-    }
+   @Bean
+   public BusContextProvider busContextProvider() {
+      return new ConstantBusContextProvider(busContext());
+   }
 
-    @Bean
-    public TopologyConfiguration topologyConfiguration() {
-        return new TopologyConfiguration(busConfiguration);
-    }
+   @Bean
+   public TopologyConfiguration topologyConfiguration() {
+      return new TopologyConfiguration(busConfiguration);
+   }
 
-    private BusContext busContext() {
-        return new BusContext(topologyConfiguration(), subscriptionStorage);
-    }
+   private BusContext busContext() {
+      return new BusContext(topologyConfiguration(), subscriptionStorage);
+   }
 }

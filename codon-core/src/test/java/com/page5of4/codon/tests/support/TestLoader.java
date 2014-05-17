@@ -14,24 +14,24 @@ import org.springframework.test.context.ContextLoader;
  * @author jlewallen
  */
 public class TestLoader implements ContextLoader {
-    @Override
-    public String[] processLocations(Class<?> clazz, String... locations) {
-        return locations;
-    }
+   @Override
+   public String[] processLocations(Class<?> clazz, String... locations) {
+      return locations;
+   }
 
-    @Override
-    public ApplicationContext loadContext(String... locations) throws Exception {
-        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
-        applicationContext.register(EmbeddedActiveMqBrokerConfig.class);
-        applicationContext.register(SimpleBusConfigurationConfig.class);
-        applicationContext.register(StandaloneConfig.class);
-        applicationContext.register(PublisherConfig.class);
-        applicationContext.register(ExposeCamelContextConfig.class);
-        applicationContext.register(InMemorySubscriptionStorageConfig.class);
-        applicationContext.register(JmsTransactionConventionConfig.class);
-        applicationContext.register(TestHandlersConfig.class);
-        applicationContext.refresh();
-        applicationContext.registerShutdownHook();
-        return applicationContext;
-    }
+   @Override
+   public ApplicationContext loadContext(String... locations) throws Exception {
+      AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+      applicationContext.register(EmbeddedActiveMqBrokerConfig.class);
+      applicationContext.register(SimpleBusConfigurationConfig.class);
+      applicationContext.register(StandaloneConfig.class);
+      applicationContext.register(PublisherConfig.class);
+      applicationContext.register(ExposeCamelContextConfig.class);
+      applicationContext.register(InMemorySubscriptionStorageConfig.class);
+      applicationContext.register(JmsTransactionConventionConfig.class);
+      applicationContext.register(TestHandlersConfig.class);
+      applicationContext.refresh();
+      applicationContext.registerShutdownHook();
+      return applicationContext;
+   }
 }

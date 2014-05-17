@@ -13,34 +13,35 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CodonComponentResolver implements ComponentResolver {
-    private static final Logger logger = LoggerFactory.getLogger(CodonComponentResolver.class);
-    private final DefaultComponentResolver resolver = new DefaultComponentResolver();
-    private final TransactionConvention transactionConvention;
-    private final BusConfiguration configuration;
+   private static final Logger logger = LoggerFactory.getLogger(CodonComponentResolver.class);
+   private final DefaultComponentResolver resolver = new DefaultComponentResolver();
+   private final TransactionConvention transactionConvention;
+   private final BusConfiguration configuration;
 
-    public CodonComponentResolver(TransactionConvention transactionConvention, BusConfiguration configuration) {
-        this.transactionConvention = transactionConvention;
-        this.configuration = configuration;
-    }
+   public CodonComponentResolver(TransactionConvention transactionConvention, BusConfiguration configuration) {
+      this.transactionConvention = transactionConvention;
+      this.configuration = configuration;
+   }
 
-    @Override
-    public Component resolveComponent(String name, CamelContext camelContext) throws Exception {
-        logger.info("Resolving '{}'", name);
-        CommunicationConfiguration cc = configuration.findCommunicationConfiguration(name);
-        if (cc == null) {
-            throw new BusException(String.format("No CommunicationConfiguration available for '%s'", name));
-        }
-        logger.info("Configuration {}", cc);
-        Component resolved = resolver.resolveComponent(cc.getComponentName(), camelContext);
-        if (resolved instanceof JmsComponent) {
-            JmsComponent jmsComponent = (JmsComponent) resolved;
-            jmsComponent.setTransactionManager(transactionConvention.locate(name, jmsComponent.getConfiguration().getConnectionFactory()));
-            jmsComponent.setTransacted(true);
-            logger.info("Have {} {}", jmsComponent, jmsComponent.getConfiguration().getConnectionFactory());
-        } else if (resolved == null) {
-            logger.info("No component for '{}'", cc.getComponentName());
-            logger.info("Used {} / {}", camelContext, camelContext.getFactoryFinder(DefaultComponentResolver.RESOURCE_PATH));
-        }
-        return resolved;
-    }
+   @Override
+   public Component resolveComponent(String name, CamelContext camelContext) throws Exception {
+      logger.info("Resolving '{}'", name);
+      CommunicationConfiguration cc = configuration.findCommunicationConfiguration(name);
+      if(cc == null) {
+         throw new BusException(String.format("No CommunicationConfiguration available for '%s'", name));
+      }
+      logger.info("Configuration {}", cc);
+      Component resolved = resolver.resolveComponent(cc.getComponentName(), camelContext);
+      if(resolved instanceof JmsComponent) {
+         JmsComponent jmsComponent = (JmsComponent)resolved;
+         jmsComponent.setTransactionManager(transactionConvention.locate(name, jmsComponent.getConfiguration().getConnectionFactory()));
+         jmsComponent.setTransacted(true);
+         logger.info("Have {} {}", jmsComponent, jmsComponent.getConfiguration().getConnectionFactory());
+      }
+      else if(resolved == null) {
+         logger.info("No component for '{}'", cc.getComponentName());
+         logger.info("Used {} / {}", camelContext, camelContext.getFactoryFinder(DefaultComponentResolver.RESOURCE_PATH));
+      }
+      return resolved;
+   }
 }

@@ -7,15 +7,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class XmlWireFormatter implements DataFormat {
-    @Override
-    public void marshal(Exchange exchange, Object graph, OutputStream stream) throws Exception {
+   @Override
+   public void marshal(Exchange exchange, Object graph, OutputStream stream) throws Exception {
 
-    }
+   }
 
-    @Override
-    public Object unmarshal(Exchange exchange, InputStream stream) throws Exception {
-        return null;
-    }
+   @Override
+   public Object unmarshal(Exchange exchange, InputStream stream) throws Exception {
+      return null;
+   }
     /*
    private Map<Class<?>, JaxbDataFormat> formatters = new HashMap<Class<?>, JaxbDataFormat>();
 

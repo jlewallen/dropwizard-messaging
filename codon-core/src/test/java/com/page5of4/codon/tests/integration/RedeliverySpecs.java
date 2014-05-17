@@ -20,30 +20,30 @@ import static org.fest.assertions.Assertions.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = TestLoader.class)
 public class RedeliverySpecs {
-    @Autowired
-    Bus bus;
-    @Autowired
-    ModelCamelContext camelContext;
-    @Autowired
-    MessageAHandler handler;
+   @Autowired
+   Bus bus;
+   @Autowired
+   ModelCamelContext camelContext;
+   @Autowired
+   MessageAHandler handler;
 
-    @Before
-    public void before() {
-        handler.when(new Callable<Object>() {
-            @Override
-            public Object call() throws Exception {
-                throw new RuntimeException("Fake connection error");
-            }
-        });
-    }
+   @Before
+   public void before() {
+      handler.when(new Callable<Object>() {
+         @Override
+         public Object call() throws Exception {
+            throw new RuntimeException("Fake connection error");
+         }
+      });
+   }
 
-    @Test
-    @DirtiesContext
-    public void when_sending_message_locally_that_fails() throws Exception {
-        NotifyBuilder after = new NotifyBuilder(camelContext).whenExactlyFailed(3).whenCompleted(1).create();
+   @Test
+   @DirtiesContext
+   public void when_sending_message_locally_that_fails() throws Exception {
+      NotifyBuilder after = new NotifyBuilder(camelContext).whenExactlyFailed(3).whenCompleted(1).create();
 
-        bus.sendLocal(new MessageAMessage("Jacob"));
+      bus.sendLocal(new MessageAMessage("Jacob"));
 
-        assertThat(after.matches(5L, TimeUnit.SECONDS)).isTrue();
-    }
+      assertThat(after.matches(5L, TimeUnit.SECONDS)).isTrue();
+   }
 }

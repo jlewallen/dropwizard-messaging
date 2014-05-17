@@ -7,18 +7,18 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
 public class Main extends Application<SubscriberConfiguration> {
-    public static void main(String[] args) throws Exception {
-        new Main().run(new String[]{"server", System.getProperty("dropwizard.config")});
-    }
+   public static void main(String[] args) throws Exception {
+      new Main().run(new String[] { "server", System.getProperty("dropwizard.config") });
+   }
 
-    @Override
-    public void initialize(Bootstrap<SubscriberConfiguration> bootstrap) {
-        bootstrap.addBundle(new LocalActiveMqBundle());
-        bootstrap.addBundle(new CodonBundle());
-    }
+   @Override
+   public void initialize(Bootstrap<SubscriberConfiguration> bootstrap) {
+      bootstrap.addBundle(new LocalActiveMqBundle());
+      bootstrap.addBundle(new CodonBundle());
+   }
 
-    @Override
-    public void run(SubscriberConfiguration configuration, Environment environment) throws ClassNotFoundException {
-        environment.jersey().register(DummyResource.class);
-    }
+   @Override
+   public void run(SubscriberConfiguration configuration, Environment environment) throws ClassNotFoundException {
+      environment.jersey().register(DummyResource.class);
+   }
 }

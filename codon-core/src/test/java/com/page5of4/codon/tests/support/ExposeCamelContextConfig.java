@@ -8,11 +8,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ExposeCamelContextConfig {
-    @Autowired
-    DefaultCamelTransport transport;
+   @Autowired
+   DefaultCamelTransport transport;
 
-    @Bean
-    public ModelCamelContext camelContext() {
-        return transport.getCamelContext();
-    }
+   @Bean
+   public ModelCamelContext camelContext() {
+      return transport.getCamelContext();
+   }
 }

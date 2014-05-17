@@ -7,28 +7,29 @@ import org.apache.camel.impl.DefaultCamelContext;
 import org.junit.Test;
 
 public class XmlWireFormatterSpecs {
-    @Test
-    public void when_marshalling() {
-        try {
-            CamelContext context = new DefaultCamelContext();
-            ProducerTemplate producer = context.createProducerTemplate();
-            OutgoingProcessor outgoing = new OutgoingProcessor(new SubscribeMessage("Jacob", "Lewallen"));
-            producer.send("mock:a", outgoing);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
+   @Test
+   public void when_marshalling() {
+      try {
+         CamelContext context = new DefaultCamelContext();
+         ProducerTemplate producer = context.createProducerTemplate();
+         OutgoingProcessor outgoing = new OutgoingProcessor(new SubscribeMessage("Jacob", "Lewallen"));
+         producer.send("mock:a", outgoing);
+      }
+      catch(Exception e) {
+         System.out.println(e);
+      }
+   }
 
-    public static class TestMessage {
-        private final String name;
+   public static class TestMessage {
+      private final String name;
 
-        public String getName() {
-            return name;
-        }
+      public String getName() {
+         return name;
+      }
 
-        public TestMessage(String name) {
-            super();
-            this.name = name;
-        }
-    }
+      public TestMessage(String name) {
+         super();
+         this.name = name;
+      }
+   }
 }

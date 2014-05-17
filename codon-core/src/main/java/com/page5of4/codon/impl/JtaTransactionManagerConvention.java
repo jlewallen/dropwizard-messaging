@@ -8,22 +8,22 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.jms.ConnectionFactory;
 
 public class JtaTransactionManagerConvention implements TransactionConvention {
-    private static final Logger logger = LoggerFactory.getLogger(JtaTransactionManagerConvention.class);
-    private final PlatformTransactionManager platformTransactionManager;
+   private static final Logger logger = LoggerFactory.getLogger(JtaTransactionManagerConvention.class);
+   private final PlatformTransactionManager platformTransactionManager;
 
-    @Autowired
-    public JtaTransactionManagerConvention(PlatformTransactionManager platformTransactionManager) {
-        super();
-        this.platformTransactionManager = platformTransactionManager;
-    }
+   @Autowired
+   public JtaTransactionManagerConvention(PlatformTransactionManager platformTransactionManager) {
+      super();
+      this.platformTransactionManager = platformTransactionManager;
+   }
 
-    @Override
-    public PlatformTransactionManager locate(String name, ConnectionFactory connectionFactory) {
-        return platformTransactionManager;
-    }
+   @Override
+   public PlatformTransactionManager locate(String name, ConnectionFactory connectionFactory) {
+      return platformTransactionManager;
+   }
 
-    @Override
-    public PlatformTransactionManager locate(String name) {
-        return platformTransactionManager;
-    }
+   @Override
+   public PlatformTransactionManager locate(String name) {
+      return platformTransactionManager;
+   }
 }

@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class InMemorySubscriptionStorageConfig {
-    @Bean
-    public SubscriptionStorage subscriptionStorage() {
-        return new InMemorySubscriptionStorage();
-    }
+   @Bean
+   public SubscriptionStorage subscriptionStorage() {
+      return new InMemorySubscriptionStorage();
+   }
 }

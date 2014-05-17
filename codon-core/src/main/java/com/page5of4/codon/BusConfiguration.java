@@ -1,31 +1,31 @@
 package com.page5of4.codon;
 
 public interface BusConfiguration {
-    String getApplicationName();
+   String getApplicationName();
 
-    String getOwnerAddress(String messageType);
+   String getOwnerAddress(String messageType);
 
-    String getLocalAddress(String messageType);
+   String getLocalAddress(String messageType);
 
-    CommunicationConfiguration findCommunicationConfiguration(String name);
+   CommunicationConfiguration findCommunicationConfiguration(String name);
 
-    ListenerConfiguration findListenerConfiguration(String name);
+   ListenerConfiguration findListenerConfiguration(String name);
 
-    public static class CommunicationConfiguration {
-        private String componentName;
+   public static class CommunicationConfiguration {
+      private String componentName;
 
-        public String getComponentName() {
-            return componentName;
-        }
+      public String getComponentName() {
+         return componentName;
+      }
 
-        public void setComponentName(String componentName) {
-            this.componentName = componentName;
-        }
+      public void setComponentName(String componentName) {
+         this.componentName = componentName;
+      }
 
-        @Override
-        public String toString() {
-            return "[componentName=" + componentName + "]";
-        }
-    }
+      @Override
+      public String toString() {
+         return "[componentName=" + componentName + "]";
+      }
+   }
 
 }

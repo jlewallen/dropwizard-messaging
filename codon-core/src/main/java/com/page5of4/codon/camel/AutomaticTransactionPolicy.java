@@ -13,29 +13,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.PlatformTransactionManager;
 
 public class AutomaticTransactionPolicy implements TransactedPolicy {
-    private static final Logger logger = LoggerFactory.getLogger(AutomaticTransactionPolicy.class);
-    private final TransactionConvention transactionConvention;
-    private final BusConfiguration configuration;
+   private static final Logger logger = LoggerFactory.getLogger(AutomaticTransactionPolicy.class);
+   private final TransactionConvention transactionConvention;
+   private final BusConfiguration configuration;
 
-    @Autowired
-    public AutomaticTransactionPolicy(BusConfiguration configuration, TransactionConvention transactionConvention) {
-        super();
-        this.configuration = configuration;
-        this.transactionConvention = transactionConvention;
-    }
+   @Autowired
+   public AutomaticTransactionPolicy(BusConfiguration configuration, TransactionConvention transactionConvention) {
+      super();
+      this.configuration = configuration;
+      this.transactionConvention = transactionConvention;
+   }
 
-    @Override
-    public void beforeWrap(RouteContext routeContext, ProcessorDefinition<?> definition) {
+   @Override
+   public void beforeWrap(RouteContext routeContext, ProcessorDefinition<?> definition) {
 
-    }
+   }
 
-    @Override
-    public Processor wrap(RouteContext routeContext, Processor processor) {
-        String key = routeContext.getEndpoint().getEndpointKey();
-        String uri = routeContext.getEndpoint().getEndpointUri();
-        logger.info("Attempting to wrap route '{}' '{}'", uri, key);
-        PlatformTransactionManager manager = transactionConvention.locate(EndpointUri.toEndpointAddress(uri).getHost());
-        SpringTransactionPolicy springPolicy = new SpringTransactionPolicy(manager);
-        return springPolicy.wrap(routeContext, processor);
-    }
+   @Override
+   public Processor wrap(RouteContext routeContext, Processor processor) {
+      String key = routeContext.getEndpoint().getEndpointKey();
+      String uri = routeContext.getEndpoint().getEndpointUri();
+      logger.info("Attempting to wrap route '{}' '{}'", uri, key);
+      PlatformTransactionManager manager = transactionConvention.locate(EndpointUri.toEndpointAddress(uri).getHost());
+      SpringTransactionPolicy springPolicy = new SpringTransactionPolicy(manager);
+      return springPolicy.wrap(routeContext, processor);
+   }
 }

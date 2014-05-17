@@ -11,43 +11,43 @@ import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
 public class PublishProcessorSpecs extends CamelTestSupport {
-    private Bus bus;
+   private Bus bus;
 
-    @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                from("direct:incoming").process(new PublishProcessor(bus));
-            }
-        };
-    }
+   @Override
+   protected RouteBuilder createRouteBuilder() throws Exception {
+      return new RouteBuilder() {
+         @Override
+         public void configure() throws Exception {
+            from("direct:incoming").process(new PublishProcessor(bus));
+         }
+      };
+   }
 
-    @Override
-    protected CamelContext createCamelContext() throws Exception {
-        ModelCamelContext context = (ModelCamelContext) super.createCamelContext();
-        context.addComponent("testing-server", new MockComponent());
-        bus = BusBuilder.make(context).
-                subscribed("mock:app1.java.lang.String", String.class).
-                subscribed("mock:app2.java.lang.String", String.class).build();
-        return context;
-    }
+   @Override
+   protected CamelContext createCamelContext() throws Exception {
+      ModelCamelContext context = (ModelCamelContext)super.createCamelContext();
+      context.addComponent("testing-server", new MockComponent());
+      bus = BusBuilder.make(context).
+         subscribed("mock:app1.java.lang.String", String.class).
+         subscribed("mock:app2.java.lang.String", String.class).build();
+      return context;
+   }
 
-    @Test
-    public void when_processing_message() throws Exception {
-        MockEndpoint mock1 = getMockEndpoint("mock:app1.java.lang.String");
-        MockEndpoint mock2 = getMockEndpoint("mock:app2.java.lang.String");
-        mock1.expectedMessageCount(1);
-        mock1.allMessages().body().isEqualTo("Message body");
-        mock1.allMessages().header(DefaultCamelTransport.MESSAGE_TYPE_KEY).isEqualTo("java.lang.String");
+   @Test
+   public void when_processing_message() throws Exception {
+      MockEndpoint mock1 = getMockEndpoint("mock:app1.java.lang.String");
+      MockEndpoint mock2 = getMockEndpoint("mock:app2.java.lang.String");
+      mock1.expectedMessageCount(1);
+      mock1.allMessages().body().isEqualTo("Message body");
+      mock1.allMessages().header(DefaultCamelTransport.MESSAGE_TYPE_KEY).isEqualTo("java.lang.String");
 
-        mock2.expectedMessageCount(1);
-        mock2.allMessages().body().isEqualTo("Message body");
-        mock2.allMessages().header(DefaultCamelTransport.MESSAGE_TYPE_KEY).isEqualTo("java.lang.String");
+      mock2.expectedMessageCount(1);
+      mock2.allMessages().body().isEqualTo("Message body");
+      mock2.allMessages().header(DefaultCamelTransport.MESSAGE_TYPE_KEY).isEqualTo("java.lang.String");
 
-        template.sendBody("direct:incoming", "Message body");
+      template.sendBody("direct:incoming", "Message body");
 
-        mock1.assertIsSatisfied();
-        mock2.assertIsSatisfied();
-    }
+      mock1.assertIsSatisfied();
+      mock2.assertIsSatisfied();
+   }
 }

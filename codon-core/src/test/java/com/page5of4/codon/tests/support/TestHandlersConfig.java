@@ -8,11 +8,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class TestHandlersConfig {
-    @Autowired
-    private ModelCamelContext camelContext;
+   @Autowired
+   private ModelCamelContext camelContext;
 
-    @Bean
-    public MessageAHandler messageAHandler() {
-        return new MessageAHandler(camelContext);
-    }
+   @Bean
+   public MessageAHandler messageAHandler() {
+      return new MessageAHandler(camelContext);
+   }
 }

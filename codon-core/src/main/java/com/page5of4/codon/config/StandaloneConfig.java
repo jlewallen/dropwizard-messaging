@@ -10,15 +10,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import(value = {CoreConfig.class, ClientConfig.class, BusConfig.class, ConstantBusContextConfig.class, PublisherConfig.class})
+@Import(value = { CoreConfig.class, ClientConfig.class, BusConfig.class, ConstantBusContextConfig.class, PublisherConfig.class })
 public class StandaloneConfig {
-    @Autowired
-    private Bus bus;
-    @Autowired
-    private HandlerRegistry handlerRegistry;
+   @Autowired
+   private Bus bus;
+   @Autowired
+   private HandlerRegistry handlerRegistry;
 
-    @Bean
-    public BusModule busModule() {
-        return new BusModule(handlerRegistry, bus, ModuleMode.STANDALONE);
-    }
+   @Bean
+   public BusModule busModule() {
+      return new BusModule(handlerRegistry, bus, ModuleMode.STANDALONE);
+   }
 }

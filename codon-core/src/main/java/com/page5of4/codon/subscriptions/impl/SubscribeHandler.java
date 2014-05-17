@@ -15,12 +15,12 @@ import java.util.Collections;
 @Service
 @MessageHandler(autoSubscribe = AutomaticallySubscribe.NEVER)
 public class SubscribeHandler {
-    private static final Logger logger = LoggerFactory.getLogger(SubscribeHandler.class);
+   private static final Logger logger = LoggerFactory.getLogger(SubscribeHandler.class);
 
-    @MessageHandler
-    public void handle(SubscribeMessage message, BusContext context) {
-        SubscriptionStorage storage = context.getSubscriptionStorage();
-        logger.info("Passing {} to {}", message, storage);
-        storage.addSubscriptions(Collections.singleton(new Subscription(message.getAddress(), message.getMessageType())));
-    }
+   @MessageHandler
+   public void handle(SubscribeMessage message, BusContext context) {
+      SubscriptionStorage storage = context.getSubscriptionStorage();
+      logger.info("Passing {} to {}", message, storage);
+      storage.addSubscriptions(Collections.singleton(new Subscription(message.getAddress(), message.getMessageType())));
+   }
 }

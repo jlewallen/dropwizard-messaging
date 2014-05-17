@@ -16,29 +16,30 @@ import java.util.List;
 
 @Configuration
 public class CamelContextConfig {
-    @Autowired
-    private ApplicationContext applicationContext;
+   @Autowired
+   private ApplicationContext applicationContext;
 
-    @Bean(initMethod = "start", destroyMethod = "stop")
-    public CamelContext camelContext() {
-        try {
-            SpringCamelContext camelContext = new SpringCamelContext(applicationContext);
-            PackageScanFilter filter = new PackageScanFilter() {
-                @Override
-                public boolean matches(Class<?> type) {
-                    return true;
-                }
-            };
-            ContextScanRouteBuilderFinder finder = new ContextScanRouteBuilderFinder(camelContext, filter);
-            List<RoutesBuilder> builders = new ArrayList<RoutesBuilder>();
-            finder.appendBuilders(builders);
-            for (RoutesBuilder builder : builders) {
-                camelContext.addRoutes(builder);
+   @Bean(initMethod = "start", destroyMethod = "stop")
+   public CamelContext camelContext() {
+      try {
+         SpringCamelContext camelContext = new SpringCamelContext(applicationContext);
+         PackageScanFilter filter = new PackageScanFilter() {
+            @Override
+            public boolean matches(Class<?> type) {
+               return true;
             }
-            camelContext.afterPropertiesSet();
-            return camelContext;
-        } catch (Exception e) {
-            throw new BusException(e);
-        }
-    }
+         };
+         ContextScanRouteBuilderFinder finder = new ContextScanRouteBuilderFinder(camelContext, filter);
+         List<RoutesBuilder> builders = new ArrayList<RoutesBuilder>();
+         finder.appendBuilders(builders);
+         for(RoutesBuilder builder : builders) {
+            camelContext.addRoutes(builder);
+         }
+         camelContext.afterPropertiesSet();
+         return camelContext;
+      }
+      catch(Exception e) {
+         throw new BusException(e);
+      }
+   }
 }

@@ -22,38 +22,38 @@ import static org.fest.assertions.Assertions.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = TestLoader.class)
 public class SubscriptionSpecs {
-    @Autowired
-    Bus bus;
-    @Autowired
-    SubscriptionStorage subscriptionStorage;
-    @Autowired
-    PropertiesConfiguration configuration;
-    @Autowired
-    ModelCamelContext camelContext;
+   @Autowired
+   Bus bus;
+   @Autowired
+   SubscriptionStorage subscriptionStorage;
+   @Autowired
+   PropertiesConfiguration configuration;
+   @Autowired
+   ModelCamelContext camelContext;
 
-    @Test
-    @DirtiesContext
-    public void when_receiving_subscription_its_stored() {
-        NotifyBuilder notify = new NotifyBuilder(camelContext).whenCompleted(1).create();
+   @Test
+   @DirtiesContext
+   public void when_receiving_subscription_its_stored() {
+      NotifyBuilder notify = new NotifyBuilder(camelContext).whenCompleted(1).create();
 
-        bus.sendLocal(new SubscribeMessage("activemq:com.page5of4.test", MessageAMessage.class.getName()));
+      bus.sendLocal(new SubscribeMessage("activemq:com.page5of4.test", MessageAMessage.class.getName()));
 
-        assertThat(notify.matches(5L, TimeUnit.SECONDS)).isTrue();
+      assertThat(notify.matches(5L, TimeUnit.SECONDS)).isTrue();
 
-        assertThat(subscriptionStorage.findAllSubscriptions().size()).isEqualTo(1);
-        assertThat(subscriptionStorage.findAllSubscriptions().get(0).getMessageType()).isEqualTo(MessageAMessage.class.getName());
-    }
+      assertThat(subscriptionStorage.findAllSubscriptions().size()).isEqualTo(1);
+      assertThat(subscriptionStorage.findAllSubscriptions().get(0).getMessageType()).isEqualTo(MessageAMessage.class.getName());
+   }
 
-    @Test
-    @DirtiesContext
-    public void when_receiving_unsubscribe_its_stored() {
-        NotifyBuilder notify = new NotifyBuilder(camelContext).whenCompleted(2).create();
+   @Test
+   @DirtiesContext
+   public void when_receiving_unsubscribe_its_stored() {
+      NotifyBuilder notify = new NotifyBuilder(camelContext).whenCompleted(2).create();
 
-        bus.sendLocal(new SubscribeMessage("activemq:com.page5of4.test", MessageAMessage.class.getName()));
-        bus.sendLocal(new UnsubscribeMessage("activemq:com.page5of4.test", MessageAMessage.class.getName()));
+      bus.sendLocal(new SubscribeMessage("activemq:com.page5of4.test", MessageAMessage.class.getName()));
+      bus.sendLocal(new UnsubscribeMessage("activemq:com.page5of4.test", MessageAMessage.class.getName()));
 
-        assertThat(notify.matches(5L, TimeUnit.SECONDS)).isTrue();
+      assertThat(notify.matches(5L, TimeUnit.SECONDS)).isTrue();
 
-        assertThat(subscriptionStorage.findAllSubscriptions()).isEmpty();
-    }
+      assertThat(subscriptionStorage.findAllSubscriptions()).isEmpty();
+   }
 }

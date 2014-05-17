@@ -8,12 +8,12 @@ import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
 public class AnnotationConfiguredCodonBeanDefinitionParser implements BeanDefinitionParser {
-    private static final Logger logger = LoggerFactory.getLogger(AnnotationConfiguredCodonBeanDefinitionParser.class);
+   private static final Logger logger = LoggerFactory.getLogger(AnnotationConfiguredCodonBeanDefinitionParser.class);
 
-    @Override
-    public BeanDefinition parse(Element element, ParserContext parserContext) {
-        logger.info("Configuring Codon");
-        // registerAutowiredConstructor(parserContext, "muleContext", MuleContextFactory.class);
-        return null;
-    }
+   @Override
+   public BeanDefinition parse(Element element, ParserContext parserContext) {
+      logger.info("Configuring Codon");
+      // registerAutowiredConstructor(parserContext, "muleContext", MuleContextFactory.class);
+      return null;
+   }
 }

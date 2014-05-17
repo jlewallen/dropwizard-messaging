@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ClientConfig {
-    @Autowired
-    private ApplicationContext applicationContext;
+   @Autowired
+   private ApplicationContext applicationContext;
 
-    @Bean
-    public HandlerRegistry handlerRegistry() {
-        return new SpringHandlerRegistry(applicationContext, new ApplicationContextResolver(applicationContext));
-    }
+   @Bean
+   public HandlerRegistry handlerRegistry() {
+      return new SpringHandlerRegistry(applicationContext, new ApplicationContextResolver(applicationContext));
+   }
 }

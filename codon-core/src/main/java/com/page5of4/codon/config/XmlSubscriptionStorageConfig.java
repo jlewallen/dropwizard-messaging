@@ -9,11 +9,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class XmlSubscriptionStorageConfig {
-    @Autowired
-    private BusConfiguration busConfiguration;
+   @Autowired
+   private BusConfiguration busConfiguration;
 
-    @Bean
-    public SubscriptionStorage subscriptionStorage() {
-        return new XmlSubscriptionStorage(busConfiguration);
-    }
+   @Bean
+   public SubscriptionStorage subscriptionStorage() {
+      return new XmlSubscriptionStorage(busConfiguration);
+   }
 }

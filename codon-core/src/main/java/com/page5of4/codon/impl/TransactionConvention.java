@@ -6,8 +6,8 @@ import javax.jms.ConnectionFactory;
 
 public interface TransactionConvention {
 
-    PlatformTransactionManager locate(String name, ConnectionFactory connectionFactory);
+   PlatformTransactionManager locate(String name, ConnectionFactory connectionFactory);
 
-    PlatformTransactionManager locate(String name);
+   PlatformTransactionManager locate(String name);
 
 }

@@ -10,35 +10,35 @@ import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 
 public class SendLocalProcessorSpecs extends CamelTestSupport {
-    private Bus bus;
+   private Bus bus;
 
-    @Override
-    protected RouteBuilder createRouteBuilder() throws Exception {
-        return new RouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                from("direct:incoming").process(new SendLocalProcessor(bus));
-            }
-        };
-    }
+   @Override
+   protected RouteBuilder createRouteBuilder() throws Exception {
+      return new RouteBuilder() {
+         @Override
+         public void configure() throws Exception {
+            from("direct:incoming").process(new SendLocalProcessor(bus));
+         }
+      };
+   }
 
-    @Override
-    protected CamelContext createCamelContext() throws Exception {
-        CamelContext context = super.createCamelContext();
-        context.addComponent("testing-server", new MockComponent());
-        bus = BusBuilder.make(context).build();
-        return context;
-    }
+   @Override
+   protected CamelContext createCamelContext() throws Exception {
+      CamelContext context = super.createCamelContext();
+      context.addComponent("testing-server", new MockComponent());
+      bus = BusBuilder.make(context).build();
+      return context;
+   }
 
-    @Test
-    public void when_processing_message() throws Exception {
-        MockEndpoint mock = getMockEndpoint("testing-server:test.java.lang.String");
-        mock.expectedMessageCount(1);
-        mock.allMessages().body().isEqualTo("Message body");
-        mock.allMessages().header(DefaultCamelTransport.MESSAGE_TYPE_KEY).isEqualTo("java.lang.String");
+   @Test
+   public void when_processing_message() throws Exception {
+      MockEndpoint mock = getMockEndpoint("testing-server:test.java.lang.String");
+      mock.expectedMessageCount(1);
+      mock.allMessages().body().isEqualTo("Message body");
+      mock.allMessages().header(DefaultCamelTransport.MESSAGE_TYPE_KEY).isEqualTo("java.lang.String");
 
-        template.sendBody("direct:incoming", "Message body");
+      template.sendBody("direct:incoming", "Message body");
 
-        mock.assertIsSatisfied();
-    }
+      mock.assertIsSatisfied();
+   }
 }
