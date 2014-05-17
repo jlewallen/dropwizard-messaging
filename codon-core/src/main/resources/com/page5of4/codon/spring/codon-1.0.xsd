@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://www.page5of4.com/schema/codon" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.page5of4.com/schema/codon" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xsd:annotation>
+		<xsd:documentation><![CDATA[
+			Nothing to say yet.
+		]]></xsd:documentation>
+	</xsd:annotation>
+
+	<xsd:element name="annotation-driven">
+		<xsd:complexType>
+		</xsd:complexType>
+	</xsd:element>
+
+</xsd:schema>

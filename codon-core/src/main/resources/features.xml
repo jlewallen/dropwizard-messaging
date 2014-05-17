@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features name="codon-${project.version}">
+
+	<feature name="codon-dependencies" version="${project.version}">
+		<feature>war</feature>
+		<feature>spring</feature>
+		<feature>spring-dm</feature>
+		<feature>activemq</feature>
+
+		<feature version="${camel.version}">camel-spring</feature>
+		<feature version="${camel.version}">camel-jms</feature>
+		<feature version="${camel.version}">camel-jaxb</feature>
+
+		<bundle start-level='30'>mvn:commons-io/commons-io/2.0.1</bundle>
+		<bundle start-level='30'>mvn:commons-lang/commons-lang/2.5</bundle>
+
+		<bundle start-level='30'>mvn:com.google.guava/guava/12.0</bundle>
+		<bundle start-level='30'>mvn:org.codehaus.jackson/jackson-core-asl/1.7.5</bundle>
+		<bundle start-level='30'>mvn:org.codehaus.jackson/jackson-mapper-asl/1.7.5</bundle>
+		<bundle start-level='30'>mvn:com.google.code.gson/gson/2.2.2</bundle>
+
+		<bundle start-level='30'>mvn:org.apache.activemq/activemq-camel/5.5.0</bundle>
+		<bundle start-level='30'>mvn:org.springframework/spring-core/${spring.version}</bundle>
+		<bundle start-level='30'>mvn:org.springframework/spring-context/${spring.version}</bundle>
+
+		<bundle start-level='30'>mvn:org.apache.activemq/activemq-camel/5.5.0</bundle>
+
+		<bundle start-level='30'>mvn:com.atomikos/transactions-osgi/3.8.0</bundle>
+
+		<feature>codon-dependencies-web</feature>
+	</feature>
+
+	<feature name="codon-dependencies-web" version="${project.version}">
+		<bundle start-level='31'>mvn:org.springframework/spring-web/${spring.version}</bundle>
+		<bundle start-level='31'>mvn:org.springframework/spring-webmvc/${spring.version}</bundle>
+		<bundle start-level='31'>mvn:org.springframework.osgi/spring-osgi-web/${spring.osgi.version}</bundle>
+		<bundle start-level='31'>mvn:com.page5of4.commons/mustache-mvc/1.2.3-SNAPSHOT</bundle>
+	</feature>
+
+	<feature name="codon-core" version="${project.version}">
+		<bundle>mvn:${main.project.groupId}/codon-useful/${project.version}</bundle>
+		<bundle>mvn:${main.project.groupId}/codon-core/${project.version}</bundle>
+		<bundle>mvn:${main.project.groupId}/codon-extender/${project.version}</bundle>
+	</feature>
+
+	<feature name="codon-persistence-memory" version="${project.version}">
+		<bundle>mvn:${main.project.groupId}/codon-persistence-memory/${project.version}</bundle>
+	</feature>
+
+	<feature name="codon-persistence-jpa" version="${project.version}">
+		<bundle>mvn:org.apache.geronimo.specs/geronimo-jpa_2.0_spec/1.1</bundle>
+
+		<bundle>mvn:commons-collections/commons-collections/3.2.1</bundle>
+		<bundle>mvn:org.apache.geronimo.specs/geronimo-jta_1.1_spec/1.1.1</bundle>
+		<bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.serp/1.13.1_3</bundle>
+		<bundle>mvn:org.apache.aries/org.apache.aries.util/0.3</bundle>
+		<bundle>mvn:org.apache.aries.jpa/org.apache.aries.jpa.api/0.3</bundle>
+		<bundle>mvn:org.apache.aries.jpa/org.apache.aries.jpa.container/0.3</bundle>
+		<bundle>mvn:org.apache.aries.transaction/org.apache.aries.transaction.manager/0.3</bundle>
+
+		<bundle>mvn:javax.persistence/com.springsource.javax.persistence/2.0.0</bundle>
+		<bundle>mvn:javax.transaction/com.springsource.javax.transaction/1.1.0</bundle>
+		<bundle>mvn:org.apache.commons/com.springsource.org.apache.commons.collections/3.2.1</bundle>
+
+		<bundle>mvn:com.h2database/h2/1.3.167</bundle>
+		<bundle>mvn:org.apache.derby/derby/10.8.1.2</bundle>
+
+		<bundle>mvn:${main.project.groupId}/codon-persistence-jpa/${project.version}</bundle>
+	</feature>
+
+	<feature name="codon-persistence-jpa-eclipselink" version="${project.version}">
+		<!-- Order here is key... -->
+		<bundle>mvn:org.eclipse.persistence/org.eclipse.persistence.antlr/2.2.0</bundle>
+		<bundle>mvn:org.eclipse.persistence/org.eclipse.persistence.core/2.2.0</bundle>
+		<bundle>mvn:org.eclipse.persistence/org.eclipse.persistence.asm/2.2.0</bundle>
+		<bundle>mvn:org.eclipse.persistence/org.eclipse.persistence.jpa/2.2.0</bundle>
+
+		<bundle>mvn:com.page5of4.codon.bundles/com.page5of4.codon.bundles.eclipselink/2.2.0</bundle>
+	</feature>
+
+	<feature name="codon-persistence-jpa-hibernate" version="${project.version}">
+		<bundle>mvn:com.page5of4.codon.bundles/com.page5of4.codon.bundles.hibernate/4.0.0</bundle>
+	</feature>
+
+	<feature name="codon-persistence-riak" version="${project.version}">
+		<bundle>mvn:com.page5of4.codon.bundles/com.page5of4.codon.bundles.riak-client/1.0.5</bundle>
+		<bundle>mvn:com.page5of4.codon.bundles/com.page5of4.codon.bundles.kryo/2.14</bundle>
+	</feature>
+
+	<feature name="codon-persistence-voldemort" version="${project.version}">
+		<bundle>mvn:com.google.guava/guava/12.0</bundle>
+		<bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.jdom/1.1_3</bundle>
+		<bundle>mvn:commons-codec/commons-codec/1.6</bundle>
+		<bundle>mvn:com.page5of4.codon.bundles/com.page5of4.codon.bundles.voldemort/0.90.1</bundle>
+		<bundle>mvn:com.page5of4.nagini/nagini/1.0.0-SNAPSHOT</bundle>
+
+		<bundle>mvn:${main.project.groupId}/codon-persistence-voldemort/${project.version}</bundle>
+	</feature>
+
+	<feature name="codon-example" version="${project.version}">
+		<feature>codon-core</feature>
+
+		<bundle>mvn:${examples.project.groupId}/codon-examples-messages/${project.version}</bundle>
+		<bundle>mvn:${examples.project.groupId}/codon-examples-env/${project.version}</bundle>
+		<bundle>mvn:${examples.project.groupId}/codon-examples-application/${project.version}</bundle>
+
+		<bundle>mvn:${examples.project.groupId}/codon-examples-subscriber/${project.version}</bundle>
+	</feature>
+
+	<feature name="codon-example-subscribers" version="${project.version}">
+		<feature>codon-core</feature>
+
+		<bundle>mvn:${examples.project.groupId}/codon-examples-messages/${project.version}</bundle>
+		<bundle>mvn:${examples.project.groupId}/codon-examples-env/${project.version}</bundle>
+
+		<bundle>mvn:${examples.project.groupId}/codon-examples-subscriber/${project.version}</bundle>
+	</feature>
+
+	<feature name="codon-example-webapp" version="${project.version}">
+		<feature>codon-core</feature>
+
+		<bundle>mvn:${examples.project.groupId}/codon-examples-messages/${project.version}</bundle>
+		<bundle>mvn:${examples.project.groupId}/codon-examples-env/${project.version}</bundle>
+		<bundle>mvn:${examples.project.groupId}/codon-examples-application/${project.version}</bundle>
+
+		<bundle>mvn:${examples.project.groupId}/codon-examples-webapp/${project.version}/war</bundle>
+	</feature>
+</features>

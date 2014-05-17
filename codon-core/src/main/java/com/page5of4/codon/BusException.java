@@ -1,0 +1,21 @@
+package com.page5of4.codon;
+
+public class BusException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+
+    public BusException() {
+        super();
+    }
+
+    public BusException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public BusException(String message) {
+        super(message);
+    }
+
+    public BusException(Throwable cause) {
+        super(cause);
+    }
+}

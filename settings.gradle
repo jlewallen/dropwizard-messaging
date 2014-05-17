@@ -1,1 +1,1 @@
-include 'dropwizard-activemq-server', 'example-publisher', 'example-subscriber'
+include 'dropwizard-activemq-server', 'codon-core', 'example-publisher', 'example-subscriber'

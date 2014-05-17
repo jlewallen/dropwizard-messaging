@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} | %-5.5p | %-8.8t | %-32.32C %4L | %m%n"/>
+        </layout>
+    </appender>
+
+    <logger name="com.page5of4">
+        <level value="debug"/>
+    </logger>
+
+    <logger name="org.apache.activemq">
+        <level value="warn"/>
+    </logger>
+    <logger name="org.apache.camel">
+        <level value="info"/>
+    </logger>
+    <logger name="org.springframework.core">
+        <level value="info"/>
+    </logger>
+    <logger name="org.springframework.beans">
+        <level value="info"/>
+    </logger>
+    <logger name="org.springframework.context">
+        <level value="info"/>
+    </logger>
+    <logger name="org.springframework.web">
+        <level value="info"/>
+    </logger>
+    <logger name="org.hibernate.engine.jdbc.spi.SqlStatementLogger">
+        <level value="trace"/>
+    </logger>
+
+    <logger name="com.atomikos">
+        <level value="debug"/>
+    </logger>
+
+    <!--
+    <logger name="org.apache.camel"><level value="trace" /></logger>
+    <logger name="org.apache.camel.support"><level value="warn" /></logger>
+    <logger name="org.apache.karaf.features.internal.FeaturesServiceImpl"><level value="warn" /></logger>
+    <logger name="org.apache.camel.impl.converter.DefaultTypeConverter"><level value="info" /></logger>
+    <logger name="org.apache.camel.management.MBeanInfoAssembler"><level value="info" /></logger>
+    <logger name="org.apache.camel.management.TimerListenerManager"><level value="info" /></logger>
+    <logger name="com.sun.jmx.trace.TraceManager"><level value="info" /></logger>
+    <logger name="org.ops4j.pax.url.mvn.internal.Connection"><level value="info" /></logger>
+    -->
+
+    <root>
+        <priority value="warn"/>
+        <appender-ref ref="console"/>
+    </root>
+</log4j:configuration>
