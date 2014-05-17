@@ -16,6 +16,8 @@ public class ActiveMqBroker implements Managed {
         Integer port = s.getLocalPort();
         s.close();
 
+        port = 61616;
+
         broker = new BrokerService();
         broker.addConnector("tcp://127.0.0.1:" + port);
         // NetworkConnector connector = broker.addNetworkConnector("static://tcp://127.0.0.1:61616");

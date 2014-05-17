@@ -74,7 +74,7 @@ public class PropertiesConfiguration implements BusConfiguration {
         ListenerConfiguration cfg = new ListenerConfiguration();
         cfg.setId("listen:" + name);
         cfg.setConcurrency(2);
-        cfg.setTransacted(true);
+        cfg.setTransacted(false);
         cfg.setListenAddress(name + "?concurrentConsumers=" + 2);
         cfg.setPoisonAddress(name + ".posion");
         return cfg;

@@ -18,8 +18,7 @@ public class HandlerRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         PoisonProcessor poison = new PoisonProcessor();
-        ProcessorDefinition<?> def = from(listenerConfiguration.getListenAddress()).
-                id(listenerConfiguration.getId());
+        ProcessorDefinition<?> def = from(listenerConfiguration.getListenAddress()).id(listenerConfiguration.getId());
         if (listenerConfiguration.getTransacted()) {
             def = def.transacted();
         }

@@ -1,5 +1,6 @@
 package com.page5of4.dropwizard.activemq.example.publisher;
 
+import com.page5of4.codon.dropwizard.CodonBundle;
 import com.page5of4.dropwizard.activemq.LocalActiveMqBundle;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -13,6 +14,7 @@ public class Main extends Application<PublisherConfiguration> {
     @Override
     public void initialize(Bootstrap<PublisherConfiguration> bootstrap) {
         bootstrap.addBundle(new LocalActiveMqBundle());
+        bootstrap.addBundle(new CodonBundle());
     }
 
     @Override

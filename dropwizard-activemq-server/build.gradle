@@ -15,7 +15,9 @@ run {
 dependencies {
     compile 'io.dropwizard:dropwizard-core:0.7.0'
     compile "com.google.guava:guava:14.0.1"
-    compile 'org.apache.activemq:activemq-core:5.7.0'
+    compile 'org.apache.activemq:activemq-broker:5.9.1'
+    compile 'org.apache.activemq:activemq-kahadb-store:5.9.1'
+    compile 'org.apache.activemq:activemq-client:5.9.1'
 
     capsule 'co.paralleluniverse:capsule:0.4.0'
 }
