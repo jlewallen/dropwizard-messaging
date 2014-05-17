@@ -1,7 +1,7 @@
 package com.page5of4.codon.camel;
 
 import com.page5of4.codon.BusConfiguration;
-import com.page5of4.codon.BusConfiguration.ListenerConfiguration;
+import com.page5of4.codon.ListenerConfiguration;
 import com.page5of4.codon.BusException;
 import com.page5of4.codon.EndpointAddress;
 import com.page5of4.codon.Transport;

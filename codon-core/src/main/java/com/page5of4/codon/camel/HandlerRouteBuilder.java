@@ -1,6 +1,6 @@
 package com.page5of4.codon.camel;
 
-import com.page5of4.codon.BusConfiguration.ListenerConfiguration;
+import com.page5of4.codon.ListenerConfiguration;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.ProcessorDefinition;
 import org.springframework.stereotype.Service;
