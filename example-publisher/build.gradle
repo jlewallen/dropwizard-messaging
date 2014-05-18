@@ -15,17 +15,12 @@ run {
 
 dependencies {
     compile 'io.dropwizard:dropwizard-core:0.7.0'
-    compile "com.google.guava:guava:14.0.1"
-    compile 'com.page5of4.dropwizard.messaging:dropwizard-activemq-server:0.1.0'
 
-    compile 'com.page5of4.codon:codon-dropwizard:0.1.0'
-    compile 'com.page5of4.dropwizard:dropwizard-eureka-client:0.1.0'
-    compile 'com.page5of4.dropwizard:dropwizard-zookeeper:0.1.0'
+    compile project(':dropwizard-activemq-server')
+    compile project(':codon-dropwizard')
 
-    compile 'org.apache.camel:camel-core:2.13.0'
-    compile 'org.apache.camel:camel-jms:2.13.0'
-    compile 'org.apache.camel:camel-jackson:2.13.0'
-    compile 'org.apache.camel:camel-gson:2.13.0'
+    compile 'com.page5of4.dropwizard:dropwizard-eureka-client:0.1.0-SNAPSHOT'
+    compile 'com.page5of4.dropwizard:dropwizard-zookeeper:0.1.0-SNAPSHOT'
 
     capsule 'co.paralleluniverse:capsule:0.4.0'
 }

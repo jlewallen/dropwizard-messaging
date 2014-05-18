@@ -9,19 +9,10 @@ run {
 
 dependencies {
     compile 'io.dropwizard:dropwizard-core:0.7.0'
-    compile "com.google.guava:guava:14.0.1"
-    compile 'com.page5of4.dropwizard.activemq:dropwizard-activemq-server:0.1.0'
-    compile 'com.page5of4.codon:codon-core:0.1.0'
-    compile 'org.apache.camel:camel-core:2.13.0'
-    compile 'org.apache.camel:camel-jms:2.13.0'
-    compile 'org.apache.camel:camel-jackson:2.13.0'
-    compile 'org.apache.camel:camel-gson:2.13.0'
 
-    compile 'org.apache.activemq:activemq-camel:5.7.0'
+    compile project(':dropwizard-activemq-server')
+    compile project(':codon-core')
 
     testCompile 'junit:junit:4.11'
-    testCompile 'org.apache.camel:camel-test:2.13.0'
-    testCompile 'org.easytesting:fest-assert:1.4'
-    testCompile 'org.springframework:spring-test:3.2.8.RELEASE'
 }
 
