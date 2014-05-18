@@ -1,8 +1,8 @@
 package com.page5of4.codon.camel;
 
 import com.page5of4.codon.BusConfiguration;
-import com.page5of4.codon.BusConfiguration.CommunicationConfiguration;
 import com.page5of4.codon.BusException;
+import com.page5of4.codon.CommunicationConfiguration;
 import com.page5of4.codon.impl.TransactionConvention;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Component;
@@ -11,6 +11,7 @@ import org.apache.camel.impl.DefaultComponentResolver;
 import org.apache.camel.spi.ComponentResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.PlatformTransactionManager;
 
 public class CodonComponentResolver implements ComponentResolver {
    private static final Logger logger = LoggerFactory.getLogger(CodonComponentResolver.class);
@@ -34,8 +35,11 @@ public class CodonComponentResolver implements ComponentResolver {
       Component resolved = resolver.resolveComponent(cc.getComponentName(), camelContext);
       if(resolved instanceof JmsComponent) {
          JmsComponent jmsComponent = (JmsComponent)resolved;
-         jmsComponent.setTransactionManager(transactionConvention.locate(name, jmsComponent.getConfiguration().getConnectionFactory()));
-         jmsComponent.setTransacted(true);
+         PlatformTransactionManager platformTransactionManager = transactionConvention.locate(name, jmsComponent.getConfiguration().getConnectionFactory());
+         if(platformTransactionManager != null) {
+            jmsComponent.setTransactionManager(platformTransactionManager);
+            jmsComponent.setTransacted(true);
+         }
          logger.info("Have {} {}", jmsComponent, jmsComponent.getConfiguration().getConnectionFactory());
       }
       else if(resolved == null) {

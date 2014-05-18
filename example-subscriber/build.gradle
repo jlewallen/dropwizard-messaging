@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'maven'
 apply plugin: 'application'
 
 sourceCompatibility = '1.8'
@@ -15,11 +16,14 @@ run {
 dependencies {
     compile 'io.dropwizard:dropwizard-core:0.7.0'
     compile "com.google.guava:guava:14.0.1"
-    compile 'com.page5of4.dropwizard.activemq:dropwizard-activemq-server:0.1.0'
+    compile 'com.page5of4.dropwizard.messaging:dropwizard-activemq-server:0.1.0'
 
     compile 'com.page5of4.codon:codon-dropwizard:0.1.0'
     compile 'com.page5of4.dropwizard:dropwizard-eureka-client:0.1.0'
     compile 'com.page5of4.dropwizard:dropwizard-zookeeper:0.1.0'
+
+    // Move messages to their own jar
+    compile 'com.page5of4.dropwizard.messaging:example-publisher:0.1.0'
 
     compile 'org.apache.camel:camel-core:2.13.0'
     compile 'org.apache.camel:camel-jms:2.13.0'

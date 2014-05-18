@@ -11,21 +11,4 @@ public interface BusConfiguration {
 
    ListenerConfiguration findListenerConfiguration(String name);
 
-   public static class CommunicationConfiguration {
-      private String componentName;
-
-      public String getComponentName() {
-         return componentName;
-      }
-
-      public void setComponentName(String componentName) {
-         this.componentName = componentName;
-      }
-
-      @Override
-      public String toString() {
-         return "[componentName=" + componentName + "]";
-      }
-   }
-
 }
