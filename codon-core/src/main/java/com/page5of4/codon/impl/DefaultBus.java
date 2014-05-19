@@ -48,7 +48,7 @@ public class DefaultBus implements Bus {
 
    @Override
    public void subscribe(Class<?> messageType) {
-      logger.info("Subscribing {}", messageType);
+      logger.info("Subscribing {}", messageType.getName());
       TopologyConfiguration topologyConfiguration = contextProvider.currentContext().getTopologyConfiguration();
       EndpointAddress local = topologyConfiguration.getLocalAddressOf(messageType);
       transport.send(topologyConfiguration.getSubscriptionAddressOf(messageType, SubscribeMessage.class), new SubscribeMessage(local.toString(), MessageUtils.getMessageType(messageType)));
@@ -56,7 +56,7 @@ public class DefaultBus implements Bus {
 
    @Override
    public void unsubscribe(Class<?> messageType) {
-      logger.info("Unsubscribing {}", messageType);
+      logger.info("Unsubscribing {}", messageType.getName());
       TopologyConfiguration topologyConfiguration = contextProvider.currentContext().getTopologyConfiguration();
       EndpointAddress local = topologyConfiguration.getLocalAddressOf(messageType);
       transport.send(topologyConfiguration.getSubscriptionAddressOf(messageType, UnsubscribeMessage.class), new UnsubscribeMessage(local.toString(), MessageUtils.getMessageType(messageType)));
@@ -64,12 +64,14 @@ public class DefaultBus implements Bus {
 
    @Override
    public void listen(Class<?> messageType) {
+      logger.info("Listen {}", messageType.getName());
       TopologyConfiguration topologyConfiguration = contextProvider.currentContext().getTopologyConfiguration();
       transport.listen(topologyConfiguration.getLocalAddressOf(messageType));
    }
 
    @Override
    public void unlisten(Class<?> messageType) {
+      logger.info("Unlisten {}", messageType.getName());
       TopologyConfiguration topologyConfiguration = contextProvider.currentContext().getTopologyConfiguration();
       transport.unlisten(topologyConfiguration.getLocalAddressOf(messageType));
    }
