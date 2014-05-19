@@ -1,17 +1,15 @@
 package com.page5of4.dropwizard.activemq.example.publisher;
 
 import com.page5of4.codon.dropwizard.ConfiguresCodon;
+import com.page5of4.dropwizard.activemq.BrokerConfiguration;
 import com.page5of4.dropwizard.activemq.ConfiguresMessageQueuing;
 import io.dropwizard.Configuration;
 
 public class PublisherConfiguration extends Configuration implements ConfiguresMessageQueuing, ConfiguresCodon {
-   private String subscriptionStorageType;
+   private BrokerConfiguration brokerConfiguration = new BrokerConfiguration();
 
-   public String getSubscriptionStorageType() {
-      return subscriptionStorageType;
-   }
-
-   public void setSubscriptionStorageType(String subscriptionStorageType) {
-      this.subscriptionStorageType = subscriptionStorageType;
+   @Override
+   public BrokerConfiguration getBrokerConfiguration() {
+      return brokerConfiguration;
    }
 }

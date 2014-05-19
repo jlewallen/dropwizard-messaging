@@ -1,6 +1,5 @@
 package com.page5of4.codon.dropwizard;
 
-import com.page5of4.codon.config.InMemorySubscriptionStorageConfig;
 import com.page5of4.codon.config.StandaloneConfig;
 import io.dropwizard.lifecycle.Managed;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -22,9 +21,6 @@ public class ManagedCodon implements Managed {
          applicationContext.register(configurationClass);
       }
       applicationContext.register(StandaloneConfig.class);
-      applicationContext.register(SimpleBusConfigurationConfig.class);
-      applicationContext.register(InMemorySubscriptionStorageConfig.class);
-      applicationContext.register(NullTransactionConventionConfig.class);
       applicationContext.refresh();
       applicationContext.start();
       applicationContext.registerShutdownHook();

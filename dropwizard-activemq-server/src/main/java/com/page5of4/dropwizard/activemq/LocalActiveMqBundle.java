@@ -7,7 +7,7 @@ import io.dropwizard.setup.Environment;
 public class LocalActiveMqBundle implements ConfiguredBundle<ConfiguresMessageQueuing> {
    @Override
    public void run(ConfiguresMessageQueuing configuration, Environment environment) throws Exception {
-      environment.lifecycle().manage(new ActiveMqBroker());
+      environment.lifecycle().manage(new ActiveMqBroker(configuration.getBrokerConfiguration()));
       environment.healthChecks().register("activemq", new ActiveMqHealthCheck());
    }
 

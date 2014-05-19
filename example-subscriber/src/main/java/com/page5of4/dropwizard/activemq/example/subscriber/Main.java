@@ -1,7 +1,10 @@
 package com.page5of4.dropwizard.activemq.example.subscriber;
 
 import com.page5of4.codon.Bus;
+import com.page5of4.codon.config.InMemorySubscriptionStorageConfig;
 import com.page5of4.codon.dropwizard.CodonBundle;
+import com.page5of4.codon.dropwizard.NullTransactionConventionConfig;
+import com.page5of4.codon.dropwizard.SimpleBusConfigurationConfig;
 import com.page5of4.dropwizard.activemq.LocalActiveMqBundle;
 import com.page5of4.dropwizard.discovery.zookeeper.ZooKeeperBundle;
 import io.dropwizard.Application;
@@ -18,7 +21,7 @@ public class Main extends Application<SubscriberConfiguration> {
    @Override
    public void initialize(Bootstrap<SubscriberConfiguration> bootstrap) {
       bootstrap.addBundle(new LocalActiveMqBundle());
-      bootstrap.addBundle(new CodonBundle(CodonConfiguration.class));
+      bootstrap.addBundle(new CodonBundle(SimpleBusConfigurationConfig.class, InMemorySubscriptionStorageConfig.class, NullTransactionConventionConfig.class, CodonConfiguration.class));
       bootstrap.addBundle(new ZooKeeperBundle(false, "127.0.0.1:2181"));
    }
 

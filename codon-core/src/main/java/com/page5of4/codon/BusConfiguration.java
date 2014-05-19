@@ -10,5 +10,4 @@ public interface BusConfiguration {
    CommunicationConfiguration findCommunicationConfiguration(String name);
 
    ListenerConfiguration findListenerConfiguration(String name);
-
 }

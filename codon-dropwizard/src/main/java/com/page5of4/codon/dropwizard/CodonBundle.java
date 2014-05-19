@@ -13,8 +13,10 @@ public class CodonBundle implements ConfiguredBundle<ConfiguresCodon> {
    public CodonBundle() {
    }
 
-   public CodonBundle(Class<?> configuration) {
-      this.configurations.add(configuration);
+   public CodonBundle(Class<?>... someConfigurations) {
+      for(Class<?> cfg : someConfigurations) {
+         this.configurations.add(cfg);
+      }
    }
 
    @Override

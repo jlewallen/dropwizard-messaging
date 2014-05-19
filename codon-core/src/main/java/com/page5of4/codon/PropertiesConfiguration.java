@@ -14,10 +14,6 @@ public class PropertiesConfiguration implements BusConfiguration {
       return applicationName;
    }
 
-   public String getLocalComponentName() {
-      return localComponentName;
-   }
-
    public void addProperties(Map<String, String> properties) {
       this.properties.putAll(properties);
    }
