@@ -52,6 +52,6 @@ public class BusConfig {
 
    @Bean
    public InvokeHandlerProcessor invokeHandlerProcessor() {
-      return new InvokeHandlerProcessor(handlerRegistry, contextProvider, null);
+      return new InvokeHandlerProcessor(handlerRegistry, contextProvider);
    }
 }

@@ -4,7 +4,6 @@ import com.page5of4.codon.BusException;
 import com.page5of4.codon.HandlerBinding;
 import com.page5of4.codon.HandlerRegistry;
 import com.page5of4.codon.impl.BusContextProvider;
-import com.page5of4.codon.impl.InstanceResolver;
 import com.page5of4.codon.impl.MessageUtils;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
@@ -21,7 +20,7 @@ public class InvokeHandlerProcessor implements Processor {
    private final BusContextProvider contextProvider;
    private final NoHandlersBehavior noHandlersBehavior;
 
-   public InvokeHandlerProcessor(HandlerRegistry handlerRegistry, BusContextProvider contextProvider, InstanceResolver resolver) {
+   public InvokeHandlerProcessor(HandlerRegistry handlerRegistry, BusContextProvider contextProvider) {
       super();
       this.handlerRegistry = handlerRegistry;
       this.contextProvider = contextProvider;

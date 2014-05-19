@@ -4,6 +4,7 @@ import com.page5of4.codon.BusConfiguration;
 import com.page5of4.codon.BusException;
 import com.page5of4.codon.CommunicationConfiguration;
 import com.page5of4.codon.impl.TransactionConvention;
+import org.apache.activemq.camel.component.ActiveMQConfiguration;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Component;
 import org.apache.camel.component.jms.JmsComponent;
@@ -35,7 +36,9 @@ public class CodonComponentResolver implements ComponentResolver {
       Component resolved = resolver.resolveComponent(cc.getComponentName(), camelContext);
       if(resolved instanceof JmsComponent) {
          JmsComponent jmsComponent = (JmsComponent)resolved;
-         PlatformTransactionManager platformTransactionManager = transactionConvention.locate(name, jmsComponent.getConfiguration().getConnectionFactory());
+         ActiveMQConfiguration activeMQConfiguration = (ActiveMQConfiguration)jmsComponent.getConfiguration();
+         activeMQConfiguration.setBrokerURL(cc.getUrl());
+         PlatformTransactionManager platformTransactionManager = transactionConvention.locate(name, activeMQConfiguration.getConnectionFactory());
          if(platformTransactionManager != null) {
             jmsComponent.setTransactionManager(platformTransactionManager);
             jmsComponent.setTransacted(true);

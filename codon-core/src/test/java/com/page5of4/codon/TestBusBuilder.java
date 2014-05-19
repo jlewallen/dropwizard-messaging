@@ -18,21 +18,21 @@ import org.apache.camel.model.ModelCamelContext;
 
 import java.util.Arrays;
 
-public class BusBuilder {
+public class TestBusBuilder {
    private final ModelCamelContext camelContext;
    private final InstanceResolver resolver = new ApplicationContextResolver(null);
    private final HandlerRegistry handlerRegistry = new SpringHandlerRegistry(null, resolver);
    private final InMemorySubscriptionStorage subscriptionStorage = new InMemorySubscriptionStorage();
 
-   public BusBuilder(ModelCamelContext camelContext) {
+   public TestBusBuilder(ModelCamelContext camelContext) {
       this.camelContext = camelContext;
    }
 
-   public static BusBuilder make(CamelContext camelContext) {
-      return new BusBuilder((ModelCamelContext)camelContext);
+   public static TestBusBuilder make(CamelContext camelContext) {
+      return new TestBusBuilder((ModelCamelContext)camelContext);
    }
 
-   public BusBuilder subscribed(String uri, Class<?> messageType) {
+   public TestBusBuilder subscribed(String uri, Class<?> messageType) {
       subscriptionStorage.addSubscriptions(Arrays.asList(new Subscription(uri, MessageUtils.getMessageType(messageType))));
       return this;
    }
@@ -41,6 +41,6 @@ public class BusBuilder {
       PropertiesConfiguration configuration = new PropertiesConfiguration("test", "testing-server");
       TopologyConfiguration topologyConfiguration = new TopologyConfiguration(configuration);
       BusContextProvider contextProvider = new ConstantBusContextProvider(new BusContext(topologyConfiguration, subscriptionStorage));
-      return new DefaultBus(contextProvider, new DefaultCamelTransport(configuration, camelContext, new InvokeHandlerProcessor(handlerRegistry, contextProvider, null)));
+      return new DefaultBus(contextProvider, new DefaultCamelTransport(configuration, camelContext, new InvokeHandlerProcessor(handlerRegistry, contextProvider)));
    }
 }

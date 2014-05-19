@@ -1,7 +1,7 @@
 package com.page5of4.codon.camel;
 
 import com.page5of4.codon.Bus;
-import com.page5of4.codon.BusBuilder;
+import com.page5of4.codon.TestBusBuilder;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockComponent;
@@ -26,7 +26,7 @@ public class SendLocalProcessorSpecs extends CamelTestSupport {
    protected CamelContext createCamelContext() throws Exception {
       CamelContext context = super.createCamelContext();
       context.addComponent("testing-server", new MockComponent());
-      bus = BusBuilder.make(context).build();
+      bus = TestBusBuilder.make(context).build();
       return context;
    }
 

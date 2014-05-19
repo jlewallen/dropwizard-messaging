@@ -4,10 +4,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PropertiesConfiguration implements BusConfiguration {
+   private static final String ACTIVEMQ_COMPONENT_NAME = "activemq";
    private static final String BUS_OWNER = "bus.owner.";
+   private static final String LOCAL_ADDRESS_FORMAT = "%s:%s.{messageType}";
    private final Map<String, String> properties = new HashMap<String, String>();
    private final String applicationName;
    private final String localComponentName;
+   private String localUrl = "tcp://127.0.0.1:61616";
+
+   public String getLocalUrl() {
+      return localUrl;
+   }
+
+   public void setLocalUrl(String localUrl) {
+      this.localUrl = localUrl;
+   }
 
    @Override
    public String getApplicationName() {
@@ -30,8 +41,9 @@ public class PropertiesConfiguration implements BusConfiguration {
       super();
       this.applicationName = applicationName;
       this.localComponentName = localComponentName;
-      if(applicationName == null || applicationName.length() == 0)
+      if(applicationName == null || applicationName.length() == 0) {
          throw new BusException("Application name is required.");
+      }
    }
 
    @Override
@@ -53,25 +65,27 @@ public class PropertiesConfiguration implements BusConfiguration {
 
    @Override
    public String getLocalAddress(String messageType) {
-      return String.format("%s:%s.{messageType}", localComponentName, applicationName);
+      return String.format(LOCAL_ADDRESS_FORMAT, localComponentName, applicationName);
    }
 
    @Override
    public CommunicationConfiguration findCommunicationConfiguration(String name) {
       return new CommunicationConfiguration() {
          {
-            setComponentName("activemq");
+            setComponentName(ACTIVEMQ_COMPONENT_NAME);
+            setUrl(getLocalUrl());
          }
       };
    }
 
    @Override
    public ListenerConfiguration findListenerConfiguration(String name) {
+      Integer concurrency = 2;
       ListenerConfiguration cfg = new ListenerConfiguration();
       cfg.setId("listen:" + name);
-      cfg.setConcurrency(2);
+      cfg.setConcurrency(concurrency);
       cfg.setTransacted(false);
-      cfg.setListenAddress(name + "?concurrentConsumers=" + 2);
+      cfg.setListenAddress(name + "?concurrentConsumers=" + concurrency);
       cfg.setPoisonAddress(name + ".posion");
       return cfg;
    }

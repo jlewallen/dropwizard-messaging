@@ -1,7 +1,7 @@
 package com.page5of4.codon.camel;
 
 import com.page5of4.codon.Bus;
-import com.page5of4.codon.BusBuilder;
+import com.page5of4.codon.TestBusBuilder;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockComponent;
@@ -27,7 +27,7 @@ public class PublishProcessorSpecs extends CamelTestSupport {
    protected CamelContext createCamelContext() throws Exception {
       ModelCamelContext context = (ModelCamelContext)super.createCamelContext();
       context.addComponent("testing-server", new MockComponent());
-      bus = BusBuilder.make(context).
+      bus = TestBusBuilder.make(context).
          subscribed("mock:app1.java.lang.String", String.class).
          subscribed("mock:app2.java.lang.String", String.class).build();
       return context;
