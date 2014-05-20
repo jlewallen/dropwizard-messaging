@@ -18,6 +18,7 @@ dependencies {
 
     compile project(':dropwizard-activemq-server')
     compile project(':codon-dropwizard')
+    compile project(':codon-discovery')
     // Move messages to their own jar
     compile project(':example-publisher')
 

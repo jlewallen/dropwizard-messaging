@@ -18,6 +18,7 @@ dependencies {
 
     compile project(':dropwizard-activemq-server')
     compile project(':codon-dropwizard')
+    compile project(':codon-discovery')
 
     compile 'com.page5of4.dropwizard:dropwizard-eureka-client:0.1.0-SNAPSHOT'
     compile 'com.page5of4.dropwizard:dropwizard-zookeeper:0.1.0-SNAPSHOT'

@@ -1,4 +1,4 @@
-package com.page5of4.codon.dropwizard;
+package com.page5of4.codon.discovery;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.google.common.collect.Lists;
