@@ -20,10 +20,9 @@ public class ActiveMqBroker implements Managed {
 
    @Override
    public void start() throws Exception {
-      String connector = "tcp://127.0.0.1:" + configuration.getPort();
-      logger.info("Starting broker on {}", connector);
+      logger.info("Starting broker on {}", configuration.getBrokerListenUrl());
       broker = new BrokerService();
-      broker.addConnector(connector);
+      broker.addConnector(configuration.getBrokerListenUrl());
       broker.setUseJmx(false);
       broker.setPersistenceAdapter(new MemoryPersistenceAdapter());
       broker.start();

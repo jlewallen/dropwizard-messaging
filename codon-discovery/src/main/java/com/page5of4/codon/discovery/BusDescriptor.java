@@ -8,17 +8,31 @@ import java.util.List;
 @JsonRootName("bus")
 public class BusDescriptor {
    public List<ListenerDescriptor> listeners = Lists.newArrayList();
+   public String applicationName;
+   public String brokerUrl;
 
    public List<ListenerDescriptor> getListeners() {
       return listeners;
    }
 
-   public void setListeners(List<ListenerDescriptor> listeners) {
-      this.listeners = listeners;
-   }
-
    public void addListener(String messageType, String address) {
       getListeners().add(new ListenerDescriptor(messageType, address));
+   }
+
+   public String getApplicationName() {
+      return applicationName;
+   }
+
+   public void setApplicationName(String applicationName) {
+      this.applicationName = applicationName;
+   }
+
+   public String getBrokerUrl() {
+      return brokerUrl;
+   }
+
+   public void setBrokerUrl(String brokerUrl) {
+      this.brokerUrl = brokerUrl;
    }
 
    public static class ListenerDescriptor {

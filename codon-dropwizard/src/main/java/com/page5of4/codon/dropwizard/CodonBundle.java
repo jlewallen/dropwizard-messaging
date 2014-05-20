@@ -7,7 +7,6 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
 
 import java.util.List;
 
@@ -30,7 +29,6 @@ public class CodonBundle implements ConfiguredBundle<ConfiguresCodon> {
 
    @Override
    public void run(ConfiguresCodon configuration, Environment environment) throws Exception {
-      logger.info("Run: " + configuration);
       environment.lifecycle().manage(new ManagedCodon(Configuration.class.cast(configuration), configurations));
    }
 }

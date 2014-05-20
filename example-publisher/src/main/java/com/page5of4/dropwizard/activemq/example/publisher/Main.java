@@ -8,6 +8,7 @@ import com.page5of4.codon.dropwizard.CodonBundle;
 import com.page5of4.codon.dropwizard.NullTransactionConventionConfig;
 import com.page5of4.codon.impl.TopologyConfiguration;
 import com.page5of4.dropwizard.activemq.LocalActiveMqBundle;
+import com.page5of4.dropwizard.discovery.LocalIpAddress;
 import com.page5of4.dropwizard.discovery.zookeeper.ZooKeeperBundle;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -26,7 +27,7 @@ public class Main extends Application<PublisherConfiguration> {
 
    @Override
    public void initialize(Bootstrap<PublisherConfiguration> bootstrap) {
-      bootstrap.addBundle(new ZooKeeperBundle(false, "127.0.0.1:2181"));
+      bootstrap.addBundle(new ZooKeeperBundle(false));
       bootstrap.addBundle(new LocalActiveMqBundle());
       bootstrap.addBundle(new CodonBundle(InMemorySubscriptionStorageConfig.class, NullTransactionConventionConfig.class, CodonConfiguration.class));
    }
@@ -41,8 +42,9 @@ public class Main extends Application<PublisherConfiguration> {
    public static class CodonConfiguration {
       @Bean
       public BusConfiguration busConfiguration(PublisherConfiguration publisherConfiguration) {
-         PropertiesConfiguration configuration = new PropertiesConfiguration("test", "activemq");
-         configuration.setLocalUrl("tcp://127.0.0.1:" + publisherConfiguration.getBrokerConfiguration().getPort());
+         Integer port = publisherConfiguration.getBrokerConfiguration().getPort();
+         String localBrokerUrl = "tcp://" + LocalIpAddress.guessLocalIp().getHostAddress() + ":" + port;
+         PropertiesConfiguration configuration = new PropertiesConfiguration("publisher", localBrokerUrl);
          configuration.put("bus.owner.com.page5of4.dropwizard", "remote:remote.{messageType}");
          return configuration;
       }

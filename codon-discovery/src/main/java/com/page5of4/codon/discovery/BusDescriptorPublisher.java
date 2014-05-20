@@ -2,6 +2,7 @@ package com.page5of4.codon.discovery;
 
 import com.page5of4.codon.BusConfiguration;
 import com.page5of4.codon.BusEvents;
+import com.page5of4.codon.CommunicationConfiguration;
 import com.page5of4.codon.impl.TopologyConfiguration;
 import com.page5of4.dropwizard.discovery.zookeeper.ServiceRegistry;
 import org.slf4j.Logger;
@@ -16,6 +17,9 @@ public class BusDescriptorPublisher implements BusEvents {
    public BusDescriptorPublisher(BusConfiguration busConfiguration, TopologyConfiguration topologyConfiguration) {
       this.busConfiguration = busConfiguration;
       this.topologyConfiguration = topologyConfiguration;
+      CommunicationConfiguration localCommunication = busConfiguration.findCommunicationConfiguration(busConfiguration.getApplicationName());
+      this.descriptor.setApplicationName(busConfiguration.getApplicationName());
+      this.descriptor.setBrokerUrl(localCommunication.getUrl());
    }
 
    @Override
@@ -47,4 +51,5 @@ public class BusDescriptorPublisher implements BusEvents {
    public void stopped() {
       ServiceRegistry.get().unpublish(descriptor);
    }
+
 }

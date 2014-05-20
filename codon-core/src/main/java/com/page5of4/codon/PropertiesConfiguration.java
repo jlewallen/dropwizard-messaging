@@ -9,20 +9,15 @@ public class PropertiesConfiguration implements BusConfiguration {
    private static final String LOCAL_ADDRESS_FORMAT = "%s:%s.{messageType}";
    private final Map<String, String> properties = new HashMap<String, String>();
    private final String applicationName;
-   private final String localComponentName;
-   private String localUrl = "tcp://127.0.0.1:61616";
-
-   public String getLocalUrl() {
-      return localUrl;
-   }
-
-   public void setLocalUrl(String localUrl) {
-      this.localUrl = localUrl;
-   }
+   private final String localBrokerUrl;
 
    @Override
    public String getApplicationName() {
       return applicationName;
+   }
+
+   public String getLocalBrokerUrl() {
+      return localBrokerUrl;
    }
 
    public void addProperties(Map<String, String> properties) {
@@ -33,14 +28,10 @@ public class PropertiesConfiguration implements BusConfiguration {
       this.properties.put(key, value);
    }
 
-   public void clear() {
-      this.properties.clear();
-   }
-
-   public PropertiesConfiguration(String applicationName, String localComponentName) {
+   public PropertiesConfiguration(String applicationName, String localBrokerUrl) {
       super();
       this.applicationName = applicationName;
-      this.localComponentName = localComponentName;
+      this.localBrokerUrl = localBrokerUrl;
       if(applicationName == null || applicationName.length() == 0) {
          throw new BusException("Application name is required.");
       }
@@ -65,7 +56,7 @@ public class PropertiesConfiguration implements BusConfiguration {
 
    @Override
    public String getLocalAddress(String messageType) {
-      return String.format(LOCAL_ADDRESS_FORMAT, localComponentName, applicationName);
+      return String.format(LOCAL_ADDRESS_FORMAT, applicationName, applicationName);
    }
 
    @Override
@@ -73,7 +64,7 @@ public class PropertiesConfiguration implements BusConfiguration {
       return new CommunicationConfiguration() {
          {
             setComponentName(ACTIVEMQ_COMPONENT_NAME);
-            setUrl(getLocalUrl());
+            setUrl(getLocalBrokerUrl());
          }
       };
    }
