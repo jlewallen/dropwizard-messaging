@@ -12,8 +12,10 @@ import com.page5of4.dropwizard.activemq.LocalActiveMqBundle;
 import com.page5of4.dropwizard.discovery.LocalIpAddress;
 import com.page5of4.dropwizard.discovery.zookeeper.ZooKeeperBundle;
 import io.dropwizard.Application;
+import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.apache.zookeeper.CreateMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -34,9 +36,19 @@ public class Main extends Application<SubscriberConfiguration> {
    }
 
    @Override
-   public void run(SubscriberConfiguration configuration, Environment environment) throws ClassNotFoundException {
-      logger.info("Run");
+   public void run(final SubscriberConfiguration configuration, Environment environment) throws ClassNotFoundException {
       environment.jersey().register(DummyResource.class);
+      environment.lifecycle().manage(new Managed() {
+         @Override
+         public void start() throws Exception {
+            configuration.getZooKeeperConfiguration().getCurator().create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath("/services/whatever");
+         }
+
+         @Override
+         public void stop() throws Exception {
+
+         }
+      });
    }
 
    @Configuration

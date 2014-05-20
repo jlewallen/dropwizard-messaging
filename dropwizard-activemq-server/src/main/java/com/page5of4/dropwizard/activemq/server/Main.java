@@ -1,4 +1,4 @@
-package com.page5of4.dropwizard.activemq;
+package com.page5of4.dropwizard.activemq.server;
 
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;

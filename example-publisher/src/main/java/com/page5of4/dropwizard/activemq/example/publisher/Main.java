@@ -34,7 +34,6 @@ public class Main extends Application<PublisherConfiguration> {
 
    @Override
    public void run(PublisherConfiguration configuration, Environment environment) throws ClassNotFoundException {
-      logger.info("Run");
       environment.jersey().register(DummyResource.class);
    }
 

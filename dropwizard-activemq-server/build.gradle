@@ -3,7 +3,7 @@ apply plugin: 'maven'
 apply plugin: 'application'
 
 sourceCompatibility = '1.8'
-mainClassName = 'com.page5of4.dropwizard.activemq.Main'
+mainClassName = 'com.page5of4.dropwizard.activemq.server.Main'
 
 configurations {
     capsule
@@ -15,10 +15,7 @@ run {
 
 dependencies {
     compile 'io.dropwizard:dropwizard-core:0.7.0'
-    compile "com.google.guava:guava:14.0.1"
-    compile 'org.apache.activemq:activemq-broker:5.9.1'
-    compile 'org.apache.activemq:activemq-kahadb-store:5.9.1'
-    compile 'org.apache.activemq:activemq-client:5.9.1'
+    compile project(":dropwizard-activemq")
 
     capsule 'co.paralleluniverse:capsule:0.4.0'
 }
