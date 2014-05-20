@@ -1,23 +1,31 @@
 package com.page5of4.codon.impl;
 
 import com.page5of4.codon.Bus;
+import com.page5of4.codon.BusEvents;
 import com.page5of4.codon.EndpointAddress;
 import com.page5of4.codon.Transport;
 import com.page5of4.codon.subscriptions.messages.SubscribeMessage;
 import com.page5of4.codon.subscriptions.messages.UnsubscribeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
 
 @Service
 public class DefaultBus implements Bus {
    private static final Logger logger = LoggerFactory.getLogger(DefaultBus.class);
    private final BusContextProvider contextProvider;
    private final Transport transport;
+   private final EventsCaller busEventsRaiser;
 
-   public DefaultBus(BusContextProvider contextProvider, Transport transport) {
+   @Autowired
+   public DefaultBus(BusContextProvider contextProvider, Transport transport, Collection<BusEvents> busEventsCollection) {
       this.contextProvider = contextProvider;
       this.transport = transport;
+      this.busEventsRaiser = new EventsCaller(busEventsCollection);
+      logger.info("{}", busEventsCollection);
    }
 
    @Override
@@ -52,6 +60,7 @@ public class DefaultBus implements Bus {
       TopologyConfiguration topologyConfiguration = contextProvider.currentContext().getTopologyConfiguration();
       EndpointAddress local = topologyConfiguration.getLocalAddressOf(messageType);
       transport.send(topologyConfiguration.getSubscriptionAddressOf(messageType, SubscribeMessage.class), new SubscribeMessage(local.toString(), MessageUtils.getMessageType(messageType)));
+      busEventsRaiser.subscribe(messageType);
    }
 
    @Override
@@ -60,6 +69,7 @@ public class DefaultBus implements Bus {
       TopologyConfiguration topologyConfiguration = contextProvider.currentContext().getTopologyConfiguration();
       EndpointAddress local = topologyConfiguration.getLocalAddressOf(messageType);
       transport.send(topologyConfiguration.getSubscriptionAddressOf(messageType, UnsubscribeMessage.class), new UnsubscribeMessage(local.toString(), MessageUtils.getMessageType(messageType)));
+      busEventsRaiser.unsubscribe(messageType);
    }
 
    @Override
@@ -67,6 +77,7 @@ public class DefaultBus implements Bus {
       logger.info("Listen {}", messageType.getName());
       TopologyConfiguration topologyConfiguration = contextProvider.currentContext().getTopologyConfiguration();
       transport.listen(topologyConfiguration.getLocalAddressOf(messageType));
+      busEventsRaiser.listen(messageType);
    }
 
    @Override
@@ -74,5 +85,7 @@ public class DefaultBus implements Bus {
       logger.info("Unlisten {}", messageType.getName());
       TopologyConfiguration topologyConfiguration = contextProvider.currentContext().getTopologyConfiguration();
       transport.unlisten(topologyConfiguration.getLocalAddressOf(messageType));
+      busEventsRaiser.unlisten(messageType);
    }
+
 }

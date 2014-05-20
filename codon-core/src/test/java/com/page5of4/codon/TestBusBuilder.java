@@ -1,5 +1,6 @@
 package com.page5of4.codon;
 
+import com.google.common.collect.Lists;
 import com.page5of4.codon.camel.DefaultCamelTransport;
 import com.page5of4.codon.camel.InvokeHandlerProcessor;
 import com.page5of4.codon.impl.ApplicationContextResolver;
@@ -41,6 +42,7 @@ public class TestBusBuilder {
       PropertiesConfiguration configuration = new PropertiesConfiguration("test", "testing-server");
       TopologyConfiguration topologyConfiguration = new TopologyConfiguration(configuration);
       BusContextProvider contextProvider = new ConstantBusContextProvider(new BusContext(topologyConfiguration, subscriptionStorage));
-      return new DefaultBus(contextProvider, new DefaultCamelTransport(configuration, camelContext, new InvokeHandlerProcessor(handlerRegistry, contextProvider)));
+      DefaultCamelTransport transport = new DefaultCamelTransport(configuration, camelContext, new InvokeHandlerProcessor(handlerRegistry, contextProvider));
+      return new DefaultBus(contextProvider, transport, Lists.<BusEvents>newArrayList());
    }
 }

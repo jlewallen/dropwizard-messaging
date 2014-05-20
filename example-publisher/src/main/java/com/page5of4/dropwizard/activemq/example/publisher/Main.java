@@ -1,11 +1,15 @@
 package com.page5of4.dropwizard.activemq.example.publisher;
 
 import com.page5of4.codon.BusConfiguration;
+import com.page5of4.codon.BusEvents;
 import com.page5of4.codon.PropertiesConfiguration;
 import com.page5of4.codon.config.InMemorySubscriptionStorageConfig;
+import com.page5of4.codon.dropwizard.BusDescriptor;
 import com.page5of4.codon.dropwizard.CodonBundle;
 import com.page5of4.codon.dropwizard.NullTransactionConventionConfig;
+import com.page5of4.codon.impl.TopologyConfiguration;
 import com.page5of4.dropwizard.activemq.LocalActiveMqBundle;
+import com.page5of4.dropwizard.discovery.zookeeper.ServiceRegistry;
 import com.page5of4.dropwizard.discovery.zookeeper.ZooKeeperBundle;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -43,6 +47,53 @@ public class Main extends Application<PublisherConfiguration> {
          configuration.setLocalUrl("tcp://127.0.0.1:" + publisherConfiguration.getBrokerConfiguration().getPort());
          configuration.put("bus.owner.com.page5of4.dropwizard", "remote:remote.{messageType}");
          return configuration;
+      }
+
+      @Bean
+      public RegistrationManager registrationManager(BusConfiguration busConfiguration, TopologyConfiguration topologyConfiguration) {
+         return new RegistrationManager(busConfiguration, topologyConfiguration);
+      }
+   }
+
+   public static class RegistrationManager implements BusEvents {
+      private static final Logger logger = LoggerFactory.getLogger(RegistrationManager.class);
+      private final BusDescriptor descriptor = new BusDescriptor();
+      private final BusConfiguration busConfiguration;
+      private TopologyConfiguration topologyConfiguration;
+
+      public RegistrationManager(BusConfiguration busConfiguration, TopologyConfiguration topologyConfiguration) {
+         this.busConfiguration = busConfiguration;
+         this.topologyConfiguration = topologyConfiguration;
+      }
+
+      @Override
+      public void started() {
+         logger.info("Publishing BusDescriptor...");
+         ServiceRegistry.get().publish(descriptor);
+      }
+
+      @Override
+      public void subscribe(Class<?> messageType) {
+      }
+
+      @Override
+      public void unsubscribe(Class<?> messageType) {
+         throw new RuntimeException("Not supported");
+      }
+
+      @Override
+      public void listen(Class<?> messageType) {
+         descriptor.addListener(messageType.getName(), topologyConfiguration.getLocalAddressOf(messageType).toString());
+      }
+
+      @Override
+      public void unlisten(Class<?> messageType) {
+         throw new RuntimeException("Not supported");
+      }
+
+      @Override
+      public void stopped() {
+         ServiceRegistry.get().unpublish(descriptor);
       }
    }
 }

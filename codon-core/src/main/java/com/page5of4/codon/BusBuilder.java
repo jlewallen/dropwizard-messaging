@@ -1,5 +1,6 @@
 package com.page5of4.codon;
 
+import com.google.common.collect.Lists;
 import com.page5of4.codon.camel.CodonComponentResolver;
 import com.page5of4.codon.camel.DefaultCamelTransport;
 import com.page5of4.codon.camel.InvokeHandlerProcessor;
@@ -63,7 +64,7 @@ public class BusBuilder {
          BusContextProvider contextProvider = new ConstantBusContextProvider(new BusContext(topologyConfiguration, subscriptionStorage));
          InvokeHandlerProcessor invokeHandlerProcessor = new InvokeHandlerProcessor(handlerRegistry, contextProvider);
          Transport transport = new DefaultCamelTransport(configuration, camelContext, invokeHandlerProcessor);
-         return new DefaultBus(contextProvider, transport);
+         return new DefaultBus(contextProvider, transport, Lists.<BusEvents>newArrayList());
       }
       catch(Exception e) {
          throw new RuntimeException(e);

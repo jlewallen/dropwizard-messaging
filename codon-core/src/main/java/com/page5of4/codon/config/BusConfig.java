@@ -2,6 +2,7 @@ package com.page5of4.codon.config;
 
 import com.page5of4.codon.Bus;
 import com.page5of4.codon.BusConfiguration;
+import com.page5of4.codon.BusEvents;
 import com.page5of4.codon.BusException;
 import com.page5of4.codon.HandlerRegistry;
 import com.page5of4.codon.Transport;
@@ -18,6 +19,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+import java.util.Collection;
+
 @Configuration
 @Import(value = { CoreConfig.class })
 public class BusConfig {
@@ -33,8 +36,8 @@ public class BusConfig {
    private BusConfiguration configuration;
 
    @Bean
-   public Bus bus() {
-      return new DefaultBus(contextProvider, transport());
+   public Bus bus(Collection<BusEvents> busEvents) {
+      return new DefaultBus(contextProvider, transport(), busEvents);
    }
 
    @Bean
