@@ -30,12 +30,12 @@ public class BusConfigurationTopologyConfigurationSpecs {
 
    @Test
    public void when_getting_owning_address_of_message() {
-      assertThat(topology.getOwner(ExampleMessage.class)).isEqualTo(new EndpointAddress("server:remote.com.page5of4.codon.TopologyConfigurationSpecs$ExampleMessage"));
+      assertThat(topology.getOwner(ExampleMessage.class)).isEqualTo(new EndpointAddress("server:remote.com.page5of4.codon.BusConfigurationTopologyConfigurationSpecs$ExampleMessage"));
    }
 
    @Test
    public void when_getting_local_address_of_message() {
-      assertThat(topology.getLocalAddressOf(ExampleMessage.class)).isEqualTo(new EndpointAddress("testing-server:test.com.page5of4.codon.TopologyConfigurationSpecs$ExampleMessage"));
+      assertThat(topology.getLocalAddressOf(ExampleMessage.class)).isEqualTo(new EndpointAddress("test:test.com.page5of4.codon.BusConfigurationTopologyConfigurationSpecs$ExampleMessage"));
    }
 
    @Test

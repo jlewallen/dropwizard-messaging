@@ -2,7 +2,6 @@ package com.page5of4.codon.tests.integration;
 
 import com.page5of4.codon.Bus;
 import com.page5of4.codon.PropertiesConfiguration;
-import com.page5of4.codon.subscriptions.SubscriptionStorage;
 import com.page5of4.codon.subscriptions.impl.InMemorySubscriptionStorage;
 import com.page5of4.codon.subscriptions.messages.SubscribeMessage;
 import com.page5of4.codon.subscriptions.messages.UnsubscribeMessage;
@@ -37,7 +36,7 @@ public class SubscriptionSpecs {
    public void when_receiving_subscription_its_stored() {
       NotifyBuilder notify = new NotifyBuilder(camelContext).whenCompleted(1).create();
 
-      bus.sendLocal(new SubscribeMessage("activemq:com.page5of4.test", MessageAMessage.class.getName()));
+      bus.sendLocal(new SubscribeMessage("test:com.page5of4.test", MessageAMessage.class.getName()));
 
       assertThat(notify.matches(5L, TimeUnit.SECONDS)).isTrue();
 
@@ -50,8 +49,8 @@ public class SubscriptionSpecs {
    public void when_receiving_unsubscribe_its_stored() {
       NotifyBuilder notify = new NotifyBuilder(camelContext).whenCompleted(2).create();
 
-      bus.sendLocal(new SubscribeMessage("activemq:com.page5of4.test", MessageAMessage.class.getName()));
-      bus.sendLocal(new UnsubscribeMessage("activemq:com.page5of4.test", MessageAMessage.class.getName()));
+      bus.sendLocal(new SubscribeMessage("test:com.page5of4.test", MessageAMessage.class.getName()));
+      bus.sendLocal(new UnsubscribeMessage("test:com.page5of4.test", MessageAMessage.class.getName()));
 
       assertThat(notify.matches(5L, TimeUnit.SECONDS)).isTrue();
 

@@ -17,6 +17,8 @@ dependencies {
     compile 'org.apache.camel:camel-gson:2.13.0'
 
     compile 'org.apache.activemq:activemq-camel:5.9.1'
+    compile 'org.apache.activemq:activemq-kahadb-store:5.9.1'
+    compile 'org.apache.activemq:activemq-broker:5.9.1'
 
     testCompile 'junit:junit:4.11'
     testCompile 'org.apache.camel:camel-test:2.13.0'

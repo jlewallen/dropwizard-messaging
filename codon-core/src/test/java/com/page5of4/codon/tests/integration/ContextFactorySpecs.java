@@ -6,6 +6,7 @@ import com.page5of4.codon.config.BusConfig;
 import com.page5of4.codon.impl.JmsTransactionManagerConvention;
 import com.page5of4.codon.impl.TransactionConvention;
 import com.page5of4.codon.tests.support.EmbeddedActiveMqBrokerConfig;
+import com.page5of4.codon.tests.support.EmptyEvents;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +33,11 @@ public class ContextFactorySpecs {
       @Override
       public TransactionConvention transactionConvention() {
          return new JmsTransactionManagerConvention();
+      }
+
+      @Bean
+      public EmptyEvents emptyEvents() {
+         return new EmptyEvents();
       }
    }
 }

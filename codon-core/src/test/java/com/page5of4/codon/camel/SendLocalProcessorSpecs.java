@@ -25,14 +25,14 @@ public class SendLocalProcessorSpecs extends CamelTestSupport {
    @Override
    protected CamelContext createCamelContext() throws Exception {
       CamelContext context = super.createCamelContext();
-      context.addComponent("testing-server", new MockComponent());
+      context.addComponent("test", new MockComponent());
       bus = TestBusBuilder.make(context).build();
       return context;
    }
 
    @Test
    public void when_processing_message() throws Exception {
-      MockEndpoint mock = getMockEndpoint("testing-server:test.java.lang.String");
+      MockEndpoint mock = getMockEndpoint("test:test.java.lang.String");
       mock.expectedMessageCount(1);
       mock.allMessages().body().isEqualTo("Message body");
       mock.allMessages().header(DefaultCamelTransport.MESSAGE_TYPE_KEY).isEqualTo("java.lang.String");

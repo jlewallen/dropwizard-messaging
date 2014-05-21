@@ -13,7 +13,7 @@ public class SimpleBusConfigurationConfig extends BusConfig {
    @Bean
    @Override
    public BusConfiguration busConfiguration() {
-      PropertiesConfiguration configuration = new PropertiesConfiguration("test", "activemq");
+      PropertiesConfiguration configuration = new PropertiesConfiguration("test", "tcp://127.0.0.1:61616");
       configuration.put("bus.owner.com.page5of4.codon", "remote:remote.{messageType}");
       return configuration;
    }
@@ -21,5 +21,10 @@ public class SimpleBusConfigurationConfig extends BusConfig {
    @Override
    public TransactionConvention transactionConvention() {
       return new JmsTransactionManagerConvention();
+   }
+
+   @Bean
+   public EmptyEvents emptyEvents() {
+      return new EmptyEvents();
    }
 }

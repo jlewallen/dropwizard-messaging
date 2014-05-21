@@ -23,7 +23,7 @@ public class EmbeddedActiveMqBrokerConfig {
          logger.info("No such directory!");
       }
       BrokerService broker = new BrokerService();
-      broker.addConnector("tcp://localhost:61616");
+      broker.addConnector("tcp://127.0.0.1:61616");
       broker.start();
       return broker;
    }
