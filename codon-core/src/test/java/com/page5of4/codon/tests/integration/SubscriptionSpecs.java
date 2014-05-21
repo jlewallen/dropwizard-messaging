@@ -3,6 +3,7 @@ package com.page5of4.codon.tests.integration;
 import com.page5of4.codon.Bus;
 import com.page5of4.codon.PropertiesConfiguration;
 import com.page5of4.codon.subscriptions.SubscriptionStorage;
+import com.page5of4.codon.subscriptions.impl.InMemorySubscriptionStorage;
 import com.page5of4.codon.subscriptions.messages.SubscribeMessage;
 import com.page5of4.codon.subscriptions.messages.UnsubscribeMessage;
 import com.page5of4.codon.tests.support.TestLoader;
@@ -25,7 +26,7 @@ public class SubscriptionSpecs {
    @Autowired
    Bus bus;
    @Autowired
-   SubscriptionStorage subscriptionStorage;
+   InMemorySubscriptionStorage subscriptionStorage;
    @Autowired
    PropertiesConfiguration configuration;
    @Autowired

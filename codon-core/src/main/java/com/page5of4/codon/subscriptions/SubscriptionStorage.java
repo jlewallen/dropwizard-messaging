@@ -6,8 +6,6 @@ import java.util.Collection;
 import java.util.List;
 
 public interface SubscriptionStorage {
-   List<Subscription> findAllSubscriptions();
-
    List<EndpointAddress> findAllSubscribers(String messageType);
 
    void addSubscriptions(Collection<Subscription> subscriptions);

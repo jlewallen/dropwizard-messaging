@@ -11,4 +11,4 @@ logging:
     org.apache.zookeeper.ZooKeeper: WARN
     org.apache.camel.spring: WARN
     org.springframework: WARN
-    com.page5of4.codon: DEBUG
+    com.page5of4.codon: INFO

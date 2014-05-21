@@ -13,7 +13,6 @@ import java.util.Set;
 public class InMemorySubscriptionStorage implements SubscriptionStorage {
    private final Set<Subscription> subscriptions = new HashSet<Subscription>();
 
-   @Override
    public List<Subscription> findAllSubscriptions() {
       return new ArrayList<Subscription>(subscriptions);
    }

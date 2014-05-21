@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PropertiesConfiguration implements BusConfiguration {
-   private static final String ACTIVEMQ_COMPONENT_NAME = "activemq";
+   public static final String ACTIVEMQ_COMPONENT_NAME = "activemq";
    private static final String BUS_OWNER = "bus.owner.";
    private static final String LOCAL_ADDRESS_FORMAT = "%s:%s.{messageType}";
    private final Map<String, String> properties = new HashMap<String, String>();

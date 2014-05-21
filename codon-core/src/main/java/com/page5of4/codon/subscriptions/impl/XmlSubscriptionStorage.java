@@ -30,8 +30,7 @@ public class XmlSubscriptionStorage implements SubscriptionStorage {
       this.configuration = configuration;
    }
 
-   @Override
-   public List<Subscription> findAllSubscriptions() {
+   private List<Subscription> findAllSubscriptions() {
       return new ArrayList<Subscription>(read());
    }
 
