@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.page5of4.codon.camel.CodonComponentResolver;
 import com.page5of4.codon.camel.DefaultCamelTransport;
 import com.page5of4.codon.camel.InvokeHandlerProcessor;
-import com.page5of4.codon.impl.ApplicationContextResolver;
+import com.page5of4.codon.impl.SpringApplicationContextResolver;
+import com.page5of4.codon.impl.BusConfigurationTopologyConfiguration;
 import com.page5of4.codon.impl.BusContext;
 import com.page5of4.codon.impl.BusContextProvider;
 import com.page5of4.codon.impl.ConstantBusContextProvider;
@@ -23,8 +24,8 @@ import org.springframework.context.ApplicationContext;
 
 public class BusBuilder {
    private final ModelCamelContext camelContext = new DefaultCamelContext();
-   private final InstanceResolver resolver = new ApplicationContextResolver(null);
-   private final HandlerRegistry handlerRegistry = new SpringHandlerRegistry(null, resolver);
+   private final InstanceResolver resolver = new SpringApplicationContextResolver(null);
+   private final HandlerRegistry handlerRegistry = new SpringHandlerRegistry(resolver, null);
    private SubscriptionStorage subscriptionStorage = new InMemorySubscriptionStorage();
    private TransactionConvention transactionConvention = new NullTransactionManagerConvention();
    private BusConfiguration configuration;
@@ -57,7 +58,7 @@ public class BusBuilder {
    public Bus build() {
       try {
          ApplicationContext applicationContext = null;
-         TopologyConfiguration topologyConfiguration = new TopologyConfiguration(configuration);
+         TopologyConfiguration topologyConfiguration = new BusConfigurationTopologyConfiguration(configuration);
          SpringCamelContext camelContext = new SpringCamelContext(applicationContext);
          camelContext.setComponentResolver(new CodonComponentResolver(transactionConvention, configuration));
          camelContext.afterPropertiesSet();

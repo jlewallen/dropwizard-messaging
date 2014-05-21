@@ -2,9 +2,9 @@ package com.page5of4.codon.tests.integration;
 
 import com.page5of4.codon.BusConfiguration;
 import com.page5of4.codon.PropertiesConfiguration;
-import com.page5of4.codon.config.InMemorySubscriptionStorageConfig;
-import com.page5of4.codon.config.JmsTransactionConventionConfig;
-import com.page5of4.codon.config.StandaloneConfig;
+import com.page5of4.codon.config.BusConfig;
+import com.page5of4.codon.impl.JmsTransactionManagerConvention;
+import com.page5of4.codon.impl.TransactionConvention;
 import com.page5of4.codon.tests.support.EmbeddedActiveMqBrokerConfig;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -17,18 +17,21 @@ public class ContextFactorySpecs {
       AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
       applicationContext.register(EmbeddedActiveMqBrokerConfig.class);
       applicationContext.register(SimpleBusConfigurationConfig.class);
-      applicationContext.register(StandaloneConfig.class);
-      applicationContext.register(InMemorySubscriptionStorageConfig.class);
-      applicationContext.register(JmsTransactionConventionConfig.class);
       applicationContext.refresh();
       applicationContext.destroy();
    }
 
    @Configuration
-   public static class SimpleBusConfigurationConfig {
+   public static class SimpleBusConfigurationConfig extends BusConfig {
       @Bean
+      @Override
       public BusConfiguration busConfiguration() {
          return new PropertiesConfiguration("test", "mock");
+      }
+
+      @Override
+      public TransactionConvention transactionConvention() {
+         return new JmsTransactionManagerConvention();
       }
    }
 }

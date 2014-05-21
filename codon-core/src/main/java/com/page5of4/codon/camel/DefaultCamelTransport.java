@@ -10,10 +10,7 @@ import org.apache.camel.model.ModelCamelContext;
 import org.apache.camel.model.RoutesDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -33,7 +30,6 @@ public class DefaultCamelTransport implements Transport {
       return camelContext;
    }
 
-   @Autowired
    public DefaultCamelTransport(BusConfiguration configuration, ModelCamelContext camelContext, InvokeHandlerProcessor invokeHandlerProcessor) {
       this.configuration = configuration;
       this.camelContext = camelContext;
@@ -41,7 +37,7 @@ public class DefaultCamelTransport implements Transport {
       this.producer = camelContext.createProducerTemplate();
    }
 
-   @PostConstruct
+   @Override
    public void start() {
       try {
          camelContext.start();
@@ -51,7 +47,7 @@ public class DefaultCamelTransport implements Transport {
       }
    }
 
-   @PreDestroy
+   @Override
    public void stop() {
       try {
          camelContext.stop();

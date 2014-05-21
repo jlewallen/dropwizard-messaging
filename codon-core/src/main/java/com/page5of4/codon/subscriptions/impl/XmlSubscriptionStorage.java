@@ -6,7 +6,6 @@ import com.page5of4.codon.subscriptions.Subscription;
 import com.page5of4.codon.subscriptions.SubscriptionStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -26,7 +25,6 @@ public class XmlSubscriptionStorage implements SubscriptionStorage {
    private static final String FILENAME = "com.page5of4.codon.subscriptions.xml";
    private final BusConfiguration configuration;
 
-   @Autowired
    public XmlSubscriptionStorage(BusConfiguration configuration) {
       super();
       this.configuration = configuration;

@@ -2,10 +2,9 @@ package com.page5of4.dropwizard.activemq.example.publisher;
 
 import com.page5of4.codon.BusConfiguration;
 import com.page5of4.codon.PropertiesConfiguration;
-import com.page5of4.codon.config.InMemorySubscriptionStorageConfig;
+import com.page5of4.codon.config.BusConfig;
 import com.page5of4.codon.discovery.BusDescriptorPublisher;
 import com.page5of4.codon.dropwizard.CodonBundle;
-import com.page5of4.codon.dropwizard.NullTransactionConventionConfig;
 import com.page5of4.codon.impl.TopologyConfiguration;
 import com.page5of4.dropwizard.activemq.LocalActiveMqBundle;
 import com.page5of4.dropwizard.discovery.LocalIpAddress;
@@ -15,6 +14,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,28 +29,32 @@ public class Main extends Application<PublisherConfiguration> {
    public void initialize(Bootstrap<PublisherConfiguration> bootstrap) {
       bootstrap.addBundle(new ZooKeeperBundle(false));
       bootstrap.addBundle(new LocalActiveMqBundle());
-      bootstrap.addBundle(new CodonBundle(InMemorySubscriptionStorageConfig.class, NullTransactionConventionConfig.class, CodonConfiguration.class));
+      bootstrap.addBundle(new CodonBundle(CodonConfig.class));
    }
 
    @Override
-   public void run(PublisherConfiguration configuration, Environment environment) throws ClassNotFoundException {
+   public void run(final PublisherConfiguration configuration, final Environment environment) throws ClassNotFoundException {
       environment.jersey().register(DummyResource.class);
    }
 
    @Configuration
-   public static class CodonConfiguration {
+   public static class CodonConfig extends BusConfig {
+      @Autowired
+      private PublisherConfiguration publisherConfiguration;
+
       @Bean
-      public BusConfiguration busConfiguration(PublisherConfiguration publisherConfiguration) {
+      @Override
+      public BusConfiguration busConfiguration() {
          Integer port = publisherConfiguration.getBrokerConfiguration().getPort();
          String localBrokerUrl = "tcp://" + LocalIpAddress.guessLocalIp().getHostAddress() + ":" + port;
          PropertiesConfiguration configuration = new PropertiesConfiguration("publisher", localBrokerUrl);
-         configuration.put("bus.owner.com.page5of4.dropwizard", "remote:remote.{messageType}");
+         // configuration.put("bus.owner.com.page5of4.dropwizard", "remote:remote.{messageType}");
          return configuration;
       }
 
       @Bean
-      public BusDescriptorPublisher busDescriptorPublisher(BusConfiguration busConfiguration, TopologyConfiguration topologyConfiguration) {
-         return new BusDescriptorPublisher(busConfiguration, topologyConfiguration);
+      public BusDescriptorPublisher busDescriptorPublisher(BusConfiguration busConfiguration, TopologyConfiguration topologyConfiguration, PublisherConfiguration publisherConfiguration) {
+         return new BusDescriptorPublisher(busConfiguration, topologyConfiguration, publisherConfiguration.getZooKeeperConfiguration().getCurator());
       }
    }
 }

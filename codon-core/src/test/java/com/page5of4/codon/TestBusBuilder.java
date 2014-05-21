@@ -3,13 +3,14 @@ package com.page5of4.codon;
 import com.google.common.collect.Lists;
 import com.page5of4.codon.camel.DefaultCamelTransport;
 import com.page5of4.codon.camel.InvokeHandlerProcessor;
-import com.page5of4.codon.impl.ApplicationContextResolver;
+import com.page5of4.codon.impl.BusConfigurationTopologyConfiguration;
 import com.page5of4.codon.impl.BusContext;
 import com.page5of4.codon.impl.BusContextProvider;
 import com.page5of4.codon.impl.ConstantBusContextProvider;
 import com.page5of4.codon.impl.DefaultBus;
 import com.page5of4.codon.impl.InstanceResolver;
 import com.page5of4.codon.impl.MessageUtils;
+import com.page5of4.codon.impl.SpringApplicationContextResolver;
 import com.page5of4.codon.impl.SpringHandlerRegistry;
 import com.page5of4.codon.impl.TopologyConfiguration;
 import com.page5of4.codon.subscriptions.Subscription;
@@ -21,8 +22,8 @@ import java.util.Arrays;
 
 public class TestBusBuilder {
    private final ModelCamelContext camelContext;
-   private final InstanceResolver resolver = new ApplicationContextResolver(null);
-   private final HandlerRegistry handlerRegistry = new SpringHandlerRegistry(null, resolver);
+   private final InstanceResolver resolver = new SpringApplicationContextResolver(null);
+   private final HandlerRegistry handlerRegistry = new SpringHandlerRegistry(resolver, null);
    private final InMemorySubscriptionStorage subscriptionStorage = new InMemorySubscriptionStorage();
 
    public TestBusBuilder(ModelCamelContext camelContext) {
@@ -40,7 +41,7 @@ public class TestBusBuilder {
 
    public Bus build() {
       PropertiesConfiguration configuration = new PropertiesConfiguration("test", "testing-server");
-      TopologyConfiguration topologyConfiguration = new TopologyConfiguration(configuration);
+      TopologyConfiguration topologyConfiguration = new BusConfigurationTopologyConfiguration(configuration);
       BusContextProvider contextProvider = new ConstantBusContextProvider(new BusContext(topologyConfiguration, subscriptionStorage));
       DefaultCamelTransport transport = new DefaultCamelTransport(configuration, camelContext, new InvokeHandlerProcessor(handlerRegistry, contextProvider));
       return new DefaultBus(contextProvider, transport, Lists.<BusEvents>newArrayList());

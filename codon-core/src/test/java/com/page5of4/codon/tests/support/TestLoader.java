@@ -1,9 +1,6 @@
 package com.page5of4.codon.tests.support;
 
-import com.page5of4.codon.config.InMemorySubscriptionStorageConfig;
-import com.page5of4.codon.config.JmsTransactionConventionConfig;
 import com.page5of4.codon.config.PublisherConfig;
-import com.page5of4.codon.config.StandaloneConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.ContextLoader;
@@ -24,11 +21,8 @@ public class TestLoader implements ContextLoader {
       AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
       applicationContext.register(EmbeddedActiveMqBrokerConfig.class);
       applicationContext.register(SimpleBusConfigurationConfig.class);
-      applicationContext.register(StandaloneConfig.class);
       applicationContext.register(PublisherConfig.class);
       applicationContext.register(ExposeCamelContextConfig.class);
-      applicationContext.register(InMemorySubscriptionStorageConfig.class);
-      applicationContext.register(JmsTransactionConventionConfig.class);
       applicationContext.register(TestHandlersConfig.class);
       applicationContext.refresh();
       applicationContext.registerShutdownHook();

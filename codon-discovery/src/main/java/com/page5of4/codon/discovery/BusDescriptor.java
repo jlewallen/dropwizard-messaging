@@ -64,4 +64,9 @@ public class BusDescriptor {
          this.address = address;
       }
    }
+
+   @Override
+   public String toString() {
+      return "bus<" + getApplicationName() + ">";
+   }
 }

@@ -15,6 +15,7 @@ run {
 
 dependencies {
     compile 'io.dropwizard:dropwizard-core:0.7.0'
+    compile 'com.hubspot.dropwizard:dropwizard-guice:0.6.2'
 
     compile project(':dropwizard-activemq')
     compile project(':codon-dropwizard')

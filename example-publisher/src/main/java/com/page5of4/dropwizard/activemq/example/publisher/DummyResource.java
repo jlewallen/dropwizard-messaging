@@ -2,6 +2,7 @@ package com.page5of4.dropwizard.activemq.example.publisher;
 
 import com.page5of4.dropwizard.discovery.zookeeper.ServiceInstanceRecord;
 import com.page5of4.dropwizard.discovery.zookeeper.ServiceRegistry;
+import org.joda.time.DateTime;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,6 +19,12 @@ public class DummyResource {
    @GET
    public String success() {
       return "success";
+   }
+
+   @GET
+   @Path("publish")
+   public DateTime publish() {
+      return DateTime.now();
    }
 
    @GET

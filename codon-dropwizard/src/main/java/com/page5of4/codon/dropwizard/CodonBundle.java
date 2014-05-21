@@ -30,6 +30,7 @@ public class CodonBundle implements ConfiguredBundle<ConfiguresCodon> {
    @Override
    public void run(ConfiguresCodon configuration, Environment environment) throws Exception {
       ManagedCodon managedCodon = new ManagedCodon(Configuration.class.cast(configuration), configurations);
+      configuration.getCodonConfiguration().setBus(managedCodon.getBus());
       environment.lifecycle().manage(managedCodon);
       environment.healthChecks().register("codon", new CodonHealthCheck(managedCodon));
    }

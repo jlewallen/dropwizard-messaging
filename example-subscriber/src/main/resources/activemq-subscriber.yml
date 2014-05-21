@@ -9,6 +9,6 @@ server:
 logging:
   loggers:
     org.apache.zookeeper.ZooKeeper: WARN
-    org.apache.camel.spring: INFO
+    org.apache.camel.spring: WARN
     org.springframework: WARN
     com.page5of4.codon: DEBUG

@@ -8,24 +8,19 @@ import com.page5of4.codon.subscriptions.messages.SubscribeMessage;
 import com.page5of4.codon.subscriptions.messages.UnsubscribeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
-@Service
 public class DefaultBus implements Bus {
    private static final Logger logger = LoggerFactory.getLogger(DefaultBus.class);
    private final BusContextProvider contextProvider;
    private final Transport transport;
    private final EventsCaller busEventsRaiser;
 
-   @Autowired
    public DefaultBus(BusContextProvider contextProvider, Transport transport, Collection<BusEvents> busEventsCollection) {
       this.contextProvider = contextProvider;
       this.transport = transport;
       this.busEventsRaiser = new EventsCaller(busEventsCollection);
-      logger.info("{}", busEventsCollection);
    }
 
    @Override
@@ -58,18 +53,24 @@ public class DefaultBus implements Bus {
    public void subscribe(Class<?> messageType) {
       logger.info("Subscribing {}", messageType.getName());
       TopologyConfiguration topologyConfiguration = contextProvider.currentContext().getTopologyConfiguration();
-      EndpointAddress local = topologyConfiguration.getLocalAddressOf(messageType);
-      transport.send(topologyConfiguration.getSubscriptionAddressOf(messageType, SubscribeMessage.class), new SubscribeMessage(local.toString(), MessageUtils.getMessageType(messageType)));
-      busEventsRaiser.subscribe(messageType);
+      EndpointAddress subscribeAddress = topologyConfiguration.getSubscriptionAddressOf(messageType, SubscribeMessage.class);
+      if(subscribeAddress != null) {
+         EndpointAddress local = topologyConfiguration.getLocalAddressOf(messageType);
+         transport.send(subscribeAddress, new SubscribeMessage(local.toString(), MessageUtils.getMessageType(messageType)));
+         busEventsRaiser.subscribe(messageType);
+      }
    }
 
    @Override
    public void unsubscribe(Class<?> messageType) {
       logger.info("Unsubscribing {}", messageType.getName());
       TopologyConfiguration topologyConfiguration = contextProvider.currentContext().getTopologyConfiguration();
-      EndpointAddress local = topologyConfiguration.getLocalAddressOf(messageType);
-      transport.send(topologyConfiguration.getSubscriptionAddressOf(messageType, UnsubscribeMessage.class), new UnsubscribeMessage(local.toString(), MessageUtils.getMessageType(messageType)));
-      busEventsRaiser.unsubscribe(messageType);
+      EndpointAddress subscribeAddress = topologyConfiguration.getSubscriptionAddressOf(messageType, SubscribeMessage.class);
+      if(subscribeAddress != null) {
+         EndpointAddress local = topologyConfiguration.getLocalAddressOf(messageType);
+         transport.send(subscribeAddress, new UnsubscribeMessage(local.toString(), MessageUtils.getMessageType(messageType)));
+         busEventsRaiser.unsubscribe(messageType);
+      }
    }
 
    @Override

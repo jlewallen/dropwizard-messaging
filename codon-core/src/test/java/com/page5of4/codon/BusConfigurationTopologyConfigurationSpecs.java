@@ -1,5 +1,6 @@
 package com.page5of4.codon;
 
+import com.page5of4.codon.impl.BusConfigurationTopologyConfiguration;
 import com.page5of4.codon.impl.TopologyConfiguration;
 import com.page5of4.codon.subscriptions.messages.SubscribeMessage;
 import org.junit.Before;
@@ -10,7 +11,7 @@ import java.util.Map;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-public class TopologyConfigurationSpecs {
+public class BusConfigurationTopologyConfigurationSpecs {
    private TopologyConfiguration topology;
 
    @Before
@@ -19,7 +20,7 @@ public class TopologyConfigurationSpecs {
       Map<String, String> properties = new HashMap<String, String>();
       properties.put("bus.owner.com.page5of4.codon", "server:remote.{messageType}");
       configuration.addProperties(properties);
-      topology = new TopologyConfiguration(configuration);
+      topology = new BusConfigurationTopologyConfiguration(configuration);
    }
 
    @Test(expected = BusException.class)

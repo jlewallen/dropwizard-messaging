@@ -9,7 +9,6 @@ import org.apache.camel.spi.TransactedPolicy;
 import org.apache.camel.spring.spi.SpringTransactionPolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.PlatformTransactionManager;
 
 public class AutomaticTransactionPolicy implements TransactedPolicy {
@@ -17,7 +16,6 @@ public class AutomaticTransactionPolicy implements TransactedPolicy {
    private final TransactionConvention transactionConvention;
    private final BusConfiguration configuration;
 
-   @Autowired
    public AutomaticTransactionPolicy(BusConfiguration configuration, TransactionConvention transactionConvention) {
       super();
       this.configuration = configuration;
