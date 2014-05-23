@@ -6,6 +6,7 @@ import com.page5of4.codon.BusEvents;
 import com.page5of4.codon.BusException;
 import com.page5of4.codon.BusModule;
 import com.page5of4.codon.HandlerRegistry;
+import com.page5of4.codon.Subscriber;
 import com.page5of4.codon.Transport;
 import com.page5of4.codon.camel.CodonComponentResolver;
 import com.page5of4.codon.camel.DefaultCamelTransport;
@@ -15,6 +16,7 @@ import com.page5of4.codon.impl.BusContext;
 import com.page5of4.codon.impl.BusContextProvider;
 import com.page5of4.codon.impl.ConstantBusContextProvider;
 import com.page5of4.codon.impl.DefaultBus;
+import com.page5of4.codon.impl.EventsCaller;
 import com.page5of4.codon.impl.NullTransactionManagerConvention;
 import com.page5of4.codon.impl.SpringApplicationContextResolver;
 import com.page5of4.codon.impl.SpringHandlerRegistry;
@@ -28,6 +30,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.inject.Provider;
 import java.util.Collection;
 
 @Configuration
@@ -44,8 +47,8 @@ public abstract class BusConfig {
    }
 
    @Bean
-   public Bus bus(Collection<BusEvents> busEvents) {
-      return new DefaultBus(busContextProvider(), transport(), busEvents);
+   public Bus bus() {
+      return new DefaultBus(busContextProvider(), transport(), eventsCaller());
    }
 
    @Bean
@@ -117,7 +120,20 @@ public abstract class BusConfig {
    */
 
    @Bean
-   public BusModule busModule(Bus bus, Collection<BusEvents> busEventsCollection) {
-      return new BusModule(handlerRegistry(), bus, transport(), busEventsCollection);
+   public Subscriber subscriber(Bus bus) {
+      return new Subscriber(handlerRegistry(), bus);
+   }
+
+   @Bean
+   public BusModule busModule(Bus bus) {
+      return new BusModule(handlerRegistry(), bus, subscriber(bus), eventsCaller());
+   }
+
+   @Autowired
+   private Provider<Collection<BusEvents>> busEventsProvider;
+
+   @Bean
+   public EventsCaller eventsCaller() {
+      return new EventsCaller(busEventsProvider);
    }
 }

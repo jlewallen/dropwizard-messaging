@@ -4,14 +4,15 @@ import com.google.common.collect.Lists;
 import com.page5of4.codon.camel.CodonComponentResolver;
 import com.page5of4.codon.camel.DefaultCamelTransport;
 import com.page5of4.codon.camel.InvokeHandlerProcessor;
-import com.page5of4.codon.impl.SpringApplicationContextResolver;
 import com.page5of4.codon.impl.BusConfigurationTopologyConfiguration;
 import com.page5of4.codon.impl.BusContext;
 import com.page5of4.codon.impl.BusContextProvider;
 import com.page5of4.codon.impl.ConstantBusContextProvider;
 import com.page5of4.codon.impl.DefaultBus;
+import com.page5of4.codon.impl.EventsCaller;
 import com.page5of4.codon.impl.InstanceResolver;
 import com.page5of4.codon.impl.NullTransactionManagerConvention;
+import com.page5of4.codon.impl.SpringApplicationContextResolver;
 import com.page5of4.codon.impl.SpringHandlerRegistry;
 import com.page5of4.codon.impl.TopologyConfiguration;
 import com.page5of4.codon.impl.TransactionConvention;
@@ -21,6 +22,9 @@ import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.model.ModelCamelContext;
 import org.apache.camel.spring.SpringCamelContext;
 import org.springframework.context.ApplicationContext;
+
+import javax.inject.Provider;
+import java.util.Collection;
 
 public class BusBuilder {
    private final ModelCamelContext camelContext = new DefaultCamelContext();
@@ -65,7 +69,12 @@ public class BusBuilder {
          BusContextProvider contextProvider = new ConstantBusContextProvider(new BusContext(topologyConfiguration, subscriptionStorage));
          InvokeHandlerProcessor invokeHandlerProcessor = new InvokeHandlerProcessor(handlerRegistry, contextProvider);
          Transport transport = new DefaultCamelTransport(configuration, camelContext, invokeHandlerProcessor);
-         return new DefaultBus(contextProvider, transport, Lists.<BusEvents>newArrayList());
+         return new DefaultBus(contextProvider, transport, new EventsCaller(new Provider<Collection<BusEvents>>() {
+            @Override
+            public Collection<BusEvents> get() {
+               return Lists.newArrayList();
+            }
+         }));
       }
       catch(Exception e) {
          throw new RuntimeException(e);

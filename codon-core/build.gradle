@@ -9,6 +9,7 @@ run {
 
 dependencies {
     compile "com.google.guava:guava:14.0.1"
+    compile 'javax.inject:javax.inject:1'
 
     compile 'org.apache.camel:camel-core:2.13.0'
     compile 'org.apache.camel:camel-jms:2.13.0'

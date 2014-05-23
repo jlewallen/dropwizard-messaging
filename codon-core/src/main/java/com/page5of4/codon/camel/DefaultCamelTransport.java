@@ -77,14 +77,13 @@ public class DefaultCamelTransport implements Transport {
                if(listenerConfiguration == null) {
                   throw new BusException(String.format("No ListenerConfiguration available for '%s'", address));
                }
-               logger.info("Listening on {}", address);
+               logger.debug("Listening on {}", address);
                HandlerRouteBuilder builder = new HandlerRouteBuilder(listenerConfiguration, invokeHandlerProcessor);
                ListeningOn listening = new ListeningOn(builder.getRouteCollection());
                listenerMap.put(address, listening);
                camelContext.addRoutes(builder);
+               logger.info("{} listeners on {}", listening.increase(), address);
             }
-            ListeningOn listening = listenerMap.get(address);
-            logger.info("{} listeners on {}", listening.increase(), address);
          }
       }
       catch(Exception e) {

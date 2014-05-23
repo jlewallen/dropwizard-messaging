@@ -7,7 +7,6 @@ import com.page5of4.codon.impl.TopologyConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ServiceRegistryTopologyConfiguration implements TopologyConfiguration {
-   private static final String MESSAGE_TYPE = "messageType";
    private final BusConfigurationTopologyConfiguration configuration;
 
    @Autowired

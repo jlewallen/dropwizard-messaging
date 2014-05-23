@@ -8,6 +8,7 @@ import com.page5of4.codon.impl.BusContext;
 import com.page5of4.codon.impl.BusContextProvider;
 import com.page5of4.codon.impl.ConstantBusContextProvider;
 import com.page5of4.codon.impl.DefaultBus;
+import com.page5of4.codon.impl.EventsCaller;
 import com.page5of4.codon.impl.InstanceResolver;
 import com.page5of4.codon.impl.MessageUtils;
 import com.page5of4.codon.impl.SpringApplicationContextResolver;
@@ -18,7 +19,9 @@ import com.page5of4.codon.subscriptions.impl.InMemorySubscriptionStorage;
 import org.apache.camel.CamelContext;
 import org.apache.camel.model.ModelCamelContext;
 
+import javax.inject.Provider;
 import java.util.Arrays;
+import java.util.Collection;
 
 public class TestBusBuilder {
    private final ModelCamelContext camelContext;
@@ -44,6 +47,11 @@ public class TestBusBuilder {
       TopologyConfiguration topologyConfiguration = new BusConfigurationTopologyConfiguration(configuration);
       BusContextProvider contextProvider = new ConstantBusContextProvider(new BusContext(topologyConfiguration, subscriptionStorage));
       DefaultCamelTransport transport = new DefaultCamelTransport(configuration, camelContext, new InvokeHandlerProcessor(handlerRegistry, contextProvider));
-      return new DefaultBus(contextProvider, transport, Lists.<BusEvents>newArrayList());
+      return new DefaultBus(contextProvider, transport, new EventsCaller(new Provider<Collection<BusEvents>>() {
+         @Override
+         public Collection<BusEvents> get() {
+            return Lists.newArrayList();
+         }
+      }));
    }
 }
