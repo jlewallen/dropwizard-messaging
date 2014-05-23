@@ -2,12 +2,10 @@ package com.page5of4.dropwizard.activemq.example.subscriber;
 
 import com.page5of4.codon.Bus;
 import com.page5of4.codon.BusConfiguration;
-import com.page5of4.codon.PropertiesConfiguration;
 import com.page5of4.codon.Subscriber;
 import com.page5of4.codon.activmq.discovery.ActiveMqNetworkManager;
 import com.page5of4.codon.config.BusConfig;
 import com.page5of4.codon.impl.TopologyConfiguration;
-import com.page5of4.dropwizard.discovery.LocalIpAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,11 +23,7 @@ public class NetworkedBrokersCodonConfig extends BusConfig {
    @Bean
    @Override
    public BusConfiguration busConfiguration() {
-      Integer port = subscriberConfiguration.getBrokerConfiguration().getPort();
-      String localBrokerUrl = "tcp://" + LocalIpAddress.guessLocalIp().getHostAddress() + ":" + port;
-      PropertiesConfiguration configuration = new PropertiesConfiguration("subscriber", localBrokerUrl);
-      configuration.put("bus.owner.com.page5of4.dropwizard", "publisher:publisher.{messageType}");
-      return configuration;
+      return subscriberConfiguration.getCodonConfiguration().createBusConfiguration(subscriberConfiguration.getBrokerConfiguration());
    }
 
    @Bean

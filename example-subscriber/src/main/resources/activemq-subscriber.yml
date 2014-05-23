@@ -13,3 +13,8 @@ logging:
     org.springframework: WARN
     com.page5of4.codon: INFO
     org.apache.activemq.network: ERROR
+
+codon:
+  name: subscriber
+  owners:
+    com.page5of4.dropwizard: publisher:publisher.{messageType}

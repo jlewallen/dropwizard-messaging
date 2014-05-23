@@ -52,7 +52,7 @@ public class ActiveMqNetworkManager implements BusEvents {
          }
 
          for(NetworkConnector shouldRemove : before) {
-            logger.info("Removing network connector: {}", shouldRemove.getBrokerURL());
+            logger.info("Removing network connector: {}", shouldRemove.getName());
             try {
                shouldRemove.stop();
             }

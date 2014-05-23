@@ -60,7 +60,7 @@ public class DefaultCamelTransport implements Transport {
    @Override
    public void send(EndpointAddress address, Object message) {
       try {
-         logger.debug("Sending {} -> {}", message, address);
+         logger.info("Sending {} -> {}", message, address);
          producer.send(EndpointUri.fromEndpointAddress(address), new OutgoingProcessor(message));
       }
       catch(Exception e) {

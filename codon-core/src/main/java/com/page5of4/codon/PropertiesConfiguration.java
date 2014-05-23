@@ -28,6 +28,10 @@ public class PropertiesConfiguration implements BusConfiguration {
       this.properties.put(key, value);
    }
 
+   public void setOwner(String owned, String by) {
+      put(BUS_OWNER + owned, by);
+   }
+
    public PropertiesConfiguration(String applicationName, String localBrokerUrl) {
       super();
       this.applicationName = applicationName;
