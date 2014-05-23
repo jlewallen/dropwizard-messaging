@@ -14,7 +14,12 @@ import java.util.Map;
 public class CodonConfiguration {
    @NotNull
    @JsonProperty
+   private String name;
+   @NotNull
+   @JsonProperty
    private ImmutableMap<String, String> owners = ImmutableMap.of();
+   @JsonProperty(value = "broker")
+   private BrokerConfiguration brokerConfiguration = new BrokerConfiguration();
 
    public ImmutableMap<String, String> getOwners() {
       return owners;
@@ -24,10 +29,6 @@ public class CodonConfiguration {
       this.owners = owners;
    }
 
-   @NotNull
-   @JsonProperty
-   private String name;
-
    public String getName() {
       return name;
    }
@@ -35,9 +36,6 @@ public class CodonConfiguration {
    public void setName(String name) {
       this.name = name;
    }
-
-   @JsonProperty(value = "broker")
-   private BrokerConfiguration brokerConfiguration = new BrokerConfiguration();
 
    public BrokerConfiguration getBrokerConfiguration() {
       return brokerConfiguration;
