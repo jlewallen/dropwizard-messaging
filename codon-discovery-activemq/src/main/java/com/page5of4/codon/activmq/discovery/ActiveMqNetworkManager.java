@@ -36,52 +36,58 @@ public class ActiveMqNetworkManager implements BusEvents {
       this.selfDescriptor.setInstanceName(UUID.randomUUID().toString());
    }
 
+   public class Watcher implements ServiceRegistry.ServicesWatch<ActiveMqServiceDescriptor> {
+      @Override
+      public void notify(Collection<ActiveMqServiceDescriptor> descriptors) {
+         logger.info("Topology Changed: {}", descriptors);
+         List<NetworkConnector> before = Lists.newArrayList(broker.getNetworkConnectors());
+         for(ActiveMqServiceDescriptor other : descriptors) {
+            String url = "static:(" + other.getBrokerUrl() + ")";
+            if(!other.getBrokerUrl().equals(selfDescriptor.getBrokerUrl())) {
+               createBridge(before, other, url);
+            }
+            else {
+               logger.debug("Ignoring self: {}", other.getBrokerUrl());
+            }
+         }
+
+         for(NetworkConnector shouldRemove : before) {
+            logger.info("Removing network connector: {}", shouldRemove.getBrokerURL());
+            try {
+               shouldRemove.stop();
+            }
+            catch(Exception e) {
+               logger.error("Error stopping NetworkConnector", e);
+            }
+            broker.removeNetworkConnector(shouldRemove);
+         }
+
+         subscriber.subscribeAll();
+      }
+
+      private void createBridge(List<NetworkConnector> before, ActiveMqServiceDescriptor otherBroker, String url) {
+         try {
+            NetworkConnector existing = broker.getNetworkConnectorByName(otherBroker.getInstanceName());
+            if(existing == null) {
+               logger.info("Adding network connector: {} to {} ({})", url, otherBroker.getApplicationName(), otherBroker.getInstanceName());
+               NetworkConnector networkConnector = broker.addNetworkConnector(url);
+               networkConnector.setName(otherBroker.getInstanceName());
+               networkConnector.start();
+            }
+            else {
+               before.remove(existing);
+            }
+         }
+         catch(Exception e) {
+            throw new RuntimeException(e);
+         }
+      }
+   }
+
    @Override
    public void starting() {
       ServiceRegistry.get().publish(selfDescriptor);
-      ServiceRegistry.get().watch(ActiveMqServiceDescriptor.class, new ServiceRegistry.ServicesWatch<ActiveMqServiceDescriptor>() {
-         @Override
-         public void notify(Collection<ActiveMqServiceDescriptor> descriptors) {
-            logger.info("Topology Changed: {}", descriptors);
-            List<NetworkConnector> before = Lists.newArrayList(broker.getNetworkConnectors());
-            for(ActiveMqServiceDescriptor other : descriptors) {
-               String url = "static:(" + other.getBrokerUrl() + ")";
-               if(!other.getBrokerUrl().equals(selfDescriptor.getBrokerUrl())) {
-                  try {
-                     NetworkConnector existing = broker.getNetworkConnectorByName(other.getInstanceName());
-                     if(existing == null) {
-                        logger.info("Adding network connector: {} to {} ({})", url, other.getApplicationName(), other.getInstanceName());
-                        NetworkConnector networkConnector = broker.addNetworkConnector(url);
-                        networkConnector.setName(other.getInstanceName());
-                        networkConnector.start();
-                     }
-                     else {
-                        before.remove(existing);
-                     }
-                  }
-                  catch(Exception e) {
-                     throw new RuntimeException(e);
-                  }
-               }
-               else {
-                  logger.debug("Ignoring self: {}", other.getBrokerUrl());
-               }
-            }
-
-            for(NetworkConnector shouldRemove : before) {
-               logger.info("Removing network connector: {}", shouldRemove.getBrokerURL());
-               try {
-                  shouldRemove.stop();
-               }
-               catch(Exception e) {
-                  logger.error("Error stopping NetworkConnector", e);
-               }
-               broker.removeNetworkConnector(shouldRemove);
-            }
-
-            subscriber.subscribeAll();
-         }
-      });
+      ServiceRegistry.get().watch(ActiveMqServiceDescriptor.class, new Watcher());
    }
 
    @Override
@@ -95,7 +101,7 @@ public class ActiveMqNetworkManager implements BusEvents {
 
    @Override
    public void unsubscribe(Class<?> messageType) {
-      throw new RuntimeException("Not supported");
+
    }
 
    @Override
@@ -104,7 +110,7 @@ public class ActiveMqNetworkManager implements BusEvents {
 
    @Override
    public void unlisten(Class<?> messageType) {
-      throw new RuntimeException("Not supported");
+
    }
 
    @Override
