@@ -2,6 +2,7 @@ package com.page5of4.dropwizard.activemq.example.publisher;
 
 import com.page5of4.codon.BusConfiguration;
 import com.page5of4.codon.PropertiesConfiguration;
+import com.page5of4.codon.Subscriber;
 import com.page5of4.codon.activmq.discovery.ActiveMqNetworkManager;
 import com.page5of4.codon.config.BusConfig;
 import com.page5of4.codon.impl.TopologyConfiguration;
@@ -24,7 +25,7 @@ public class NetworkedBrokersCodonConfig extends BusConfig {
    }
 
    @Bean
-   public ActiveMqNetworkManager activeMqNetworkManager(BusConfiguration busConfiguration, TopologyConfiguration topologyConfiguration, PublisherConfiguration publisherConfiguration) {
-      return new ActiveMqNetworkManager(busConfiguration, topologyConfiguration, publisherConfiguration.getZooKeeperConfiguration().getCurator(), publisherConfiguration.getBrokerConfiguration().createBroker());
+   public ActiveMqNetworkManager activeMqNetworkManager(BusConfiguration busConfiguration, TopologyConfiguration topologyConfiguration, PublisherConfiguration publisherConfiguration, Subscriber subscriber) {
+      return new ActiveMqNetworkManager(busConfiguration, topologyConfiguration, subscriber, publisherConfiguration.getZooKeeperConfiguration().getCurator(), publisherConfiguration.getBrokerConfiguration().createBroker());
    }
 }

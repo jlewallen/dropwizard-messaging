@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.page5of4.codon.BusConfiguration;
 import com.page5of4.codon.BusEvents;
 import com.page5of4.codon.CommunicationConfiguration;
+import com.page5of4.codon.Subscriber;
 import com.page5of4.codon.impl.TopologyConfiguration;
 import com.page5of4.dropwizard.discovery.zookeeper.ServiceRegistry;
 import org.apache.activemq.broker.BrokerService;
@@ -18,15 +19,18 @@ import java.util.UUID;
 
 public class ActiveMqNetworkManager implements BusEvents {
    private static final Logger logger = LoggerFactory.getLogger(ActiveMqNetworkManager.class);
-   private final ActiveMqServiceDescriptor selfDescriptor = new ActiveMqServiceDescriptor();
+   private final ActiveMqServiceDescriptor selfDescriptor;
+   private final Subscriber subscriber;
    private final CuratorFramework curator;
    private final BrokerService broker;
 
-   public ActiveMqNetworkManager(BusConfiguration busConfiguration, TopologyConfiguration topologyConfiguration, CuratorFramework curator, BrokerService broker) {
+   public ActiveMqNetworkManager(BusConfiguration busConfiguration, TopologyConfiguration topologyConfiguration, Subscriber subscriber, CuratorFramework curator, BrokerService broker) {
+      this.subscriber = subscriber;
       this.curator = curator;
       this.broker = broker;
 
       CommunicationConfiguration localCommunication = busConfiguration.findCommunicationConfiguration(busConfiguration.getApplicationName());
+      this.selfDescriptor = new ActiveMqServiceDescriptor();
       this.selfDescriptor.setApplicationName(busConfiguration.getApplicationName());
       this.selfDescriptor.setBrokerUrl(localCommunication.getUrl());
       this.selfDescriptor.setInstanceName(UUID.randomUUID().toString());
@@ -63,6 +67,7 @@ public class ActiveMqNetworkManager implements BusEvents {
                   logger.debug("Ignoring self: {}", other.getBrokerUrl());
                }
             }
+
             for(NetworkConnector shouldRemove : before) {
                logger.info("Removing network connector: {}", shouldRemove.getBrokerURL());
                try {
@@ -73,6 +78,8 @@ public class ActiveMqNetworkManager implements BusEvents {
                }
                broker.removeNetworkConnector(shouldRemove);
             }
+
+            subscriber.subscribeAll();
          }
       });
    }
