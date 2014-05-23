@@ -2,46 +2,28 @@ package com.page5of4.dropwizard.activemq;
 
 import io.dropwizard.lifecycle.Managed;
 import org.apache.activemq.broker.BrokerService;
-import org.apache.activemq.store.memory.MemoryPersistenceAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.net.ServerSocket;
 
 public class ActiveMqBroker implements Managed {
    private static final Logger logger = LoggerFactory.getLogger(ActiveMqBroker.class);
    private final BrokerConfiguration configuration;
-   private BrokerService broker;
+   private final BrokerService broker;
 
    public ActiveMqBroker(BrokerConfiguration configuration) {
       this.configuration = configuration;
+      this.broker = configuration.createBroker();
    }
 
    @Override
    public void start() throws Exception {
       logger.info("Starting broker on {}", configuration.getBrokerListenUrl());
-      broker = new BrokerService();
-      broker.addConnector(configuration.getBrokerListenUrl());
-      broker.setUseJmx(false);
-      broker.setPersistenceAdapter(new MemoryPersistenceAdapter());
       broker.start();
    }
 
    @Override
    public void stop() throws Exception {
+      logger.info("Stopping broker on {}", configuration.getBrokerListenUrl());
       broker.stop();
-   }
-
-   public static Integer getAvailablePort() {
-      try {
-         ServerSocket s = new ServerSocket(0);
-         Integer port = s.getLocalPort();
-         s.close();
-         return port;
-      }
-      catch(IOException e) {
-         throw new RuntimeException(e);
-      }
    }
 }

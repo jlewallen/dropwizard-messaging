@@ -15,6 +15,11 @@ public class EventsCaller implements BusEvents {
    }
 
    @Override
+   public void starting() {
+      for(BusEvents listener : busEventsCollection) listener.starting();
+   }
+
+   @Override
    public void started() {
       for(BusEvents listener : busEventsCollection) listener.started();
    }

@@ -12,3 +12,4 @@ logging:
     org.apache.camel.spring: WARN
     org.springframework: WARN
     com.page5of4.codon: INFO
+    org.apache.activemq.network.DiscoveryNetworkConnector: ERROR

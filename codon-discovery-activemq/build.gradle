@@ -11,7 +11,7 @@ dependencies {
     compile 'com.page5of4.dropwizard:dropwizard-zookeeper:0.1.0-SNAPSHOT'
 
     compile project(':dropwizard-activemq')
-    compile project(':codon-core')
+    compile project(':codon-discovery')
 
     testCompile 'junit:junit:4.11'
 }

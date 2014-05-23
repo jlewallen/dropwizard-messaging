@@ -4,6 +4,11 @@ import com.page5of4.codon.BusEvents;
 
 public class EmptyEvents implements BusEvents {
    @Override
+   public void starting() {
+
+   }
+
+   @Override
    public void started() {
 
    }

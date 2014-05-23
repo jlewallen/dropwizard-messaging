@@ -21,6 +21,7 @@ public class CodonBundle implements ConfiguredBundle<ConfiguresCodon> {
       for(Class<?> cfg : someConfigurations) {
          this.configurations.add(cfg);
       }
+      this.configurations.add(DropwizardConfig.class);
    }
 
    @Override
@@ -32,6 +33,7 @@ public class CodonBundle implements ConfiguredBundle<ConfiguresCodon> {
       ManagedCodon managedCodon = new ManagedCodon(Configuration.class.cast(configuration), configurations);
       configuration.getCodonConfiguration().setBus(managedCodon.getBus());
       environment.lifecycle().manage(managedCodon);
-      environment.healthChecks().register("codon", new CodonHealthCheck(managedCodon));
+      environment.healthChecks().register("codon", managedCodon.getHealthCheck());
+      environment.jersey().register(managedCodon.getResource());
    }
 }

@@ -11,15 +11,18 @@ configurations {
 
 run {
     systemProperty "dropwizard.config", "build/resources/main/activemq-subscriber.yml"
+    args "server", "build/resources/main/activemq-subscriber.yml"
 }
 
 dependencies {
     compile 'io.dropwizard:dropwizard-core:0.7.0'
     compile 'com.hubspot.dropwizard:dropwizard-guice:0.6.2'
+    compile 'org.jolokia:jolokia-core:1.2.1'
 
     compile project(':dropwizard-activemq')
     compile project(':codon-dropwizard')
     compile project(':codon-discovery')
+    compile project(':codon-discovery-activemq')
     // Move messages to their own jar
     compile project(':example-publisher')
 

@@ -27,6 +27,12 @@ public class BusModule {
 
    public void start() {
       handlerRegistry.initialize();
+      busEventsRaiser.starting();
+      subscribeAll();
+      busEventsRaiser.started();
+   }
+
+   public void subscribeAll() {
       for(HandlerBinding binding : handlerRegistry.getBindings()) {
          logger.info("Preparing '{}'", binding.getMethod());
          Class<?> messageType = binding.getMessageType();
@@ -35,7 +41,6 @@ public class BusModule {
          }
          bus.listen(messageType);
       }
-      busEventsRaiser.started();
    }
 
    public void stop() {

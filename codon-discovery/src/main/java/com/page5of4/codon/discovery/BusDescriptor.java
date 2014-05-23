@@ -9,6 +9,7 @@ import java.util.List;
 public class BusDescriptor {
    public List<ListenerDescriptor> listeners = Lists.newArrayList();
    public String applicationName;
+   public String instanceName;
    public String brokerUrl;
 
    public List<ListenerDescriptor> getListeners() {
@@ -25,6 +26,14 @@ public class BusDescriptor {
 
    public void setApplicationName(String applicationName) {
       this.applicationName = applicationName;
+   }
+
+   public String getInstanceName() {
+      return instanceName;
+   }
+
+   public void setInstanceName(String instanceName) {
+      this.instanceName = instanceName;
    }
 
    public String getBrokerUrl() {

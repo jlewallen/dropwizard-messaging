@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@MessageHandler(autoSubscribe = AutomaticallySubscribe.NEVER)
+@MessageHandler(autoSubscribe = AutomaticallySubscribe.ALWAYS)
 public class LaunchWorkHandler {
    private static final Logger logger = LoggerFactory.getLogger(LaunchWorkHandler.class);
    private final Bus bus;

@@ -11,15 +11,19 @@ configurations {
 
 run {
     systemProperty "dropwizard.config", "build/resources/main/activemq-publisher.yml"
+    args "server", "build/resources/main/activemq-publisher.yml"
 }
 
 dependencies {
     compile 'io.dropwizard:dropwizard-core:0.7.0'
     compile 'com.hubspot.dropwizard:dropwizard-guice:0.6.2'
+    compile 'org.jolokia:jolokia-core:1.2.1'
+
 
     compile project(':dropwizard-activemq')
     compile project(':codon-dropwizard')
     compile project(':codon-discovery')
+    compile project(':codon-discovery-activemq')
 
     compile 'com.page5of4.dropwizard:dropwizard-eureka-client:0.1.0-SNAPSHOT'
     compile 'com.page5of4.dropwizard:dropwizard-zookeeper:0.1.0-SNAPSHOT'

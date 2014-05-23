@@ -88,5 +88,4 @@ public class DefaultBus implements Bus {
       transport.unlisten(topologyConfiguration.getLocalAddressOf(messageType));
       busEventsRaiser.unlisten(messageType);
    }
-
 }

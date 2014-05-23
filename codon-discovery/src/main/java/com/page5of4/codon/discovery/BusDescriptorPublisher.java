@@ -6,16 +6,15 @@ import com.page5of4.codon.CommunicationConfiguration;
 import com.page5of4.codon.impl.TopologyConfiguration;
 import com.page5of4.dropwizard.discovery.zookeeper.ServiceRegistry;
 import org.apache.curator.framework.CuratorFramework;
-import org.apache.curator.framework.api.CuratorEvent;
-import org.apache.curator.framework.api.CuratorListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
+import java.util.UUID;
 
 public class BusDescriptorPublisher implements BusEvents {
    private static final Logger logger = LoggerFactory.getLogger(BusDescriptorPublisher.class);
-   private final BusDescriptor descriptor = new BusDescriptor();
+   private final BusDescriptor selfDescriptor = new BusDescriptor();
    private final BusConfiguration busConfiguration;
    private final TopologyConfiguration topologyConfiguration;
    private final CuratorFramework curator;
@@ -26,13 +25,19 @@ public class BusDescriptorPublisher implements BusEvents {
       this.curator = curator;
 
       CommunicationConfiguration localCommunication = busConfiguration.findCommunicationConfiguration(busConfiguration.getApplicationName());
-      this.descriptor.setApplicationName(busConfiguration.getApplicationName());
-      this.descriptor.setBrokerUrl(localCommunication.getUrl());
+      this.selfDescriptor.setApplicationName(busConfiguration.getApplicationName());
+      this.selfDescriptor.setBrokerUrl(localCommunication.getUrl());
+      this.selfDescriptor.setInstanceName(UUID.randomUUID().toString());
+   }
+
+   @Override
+   public void starting() {
+
    }
 
    @Override
    public void started() {
-      ServiceRegistry.get().publish(descriptor);
+      ServiceRegistry.get().publish(selfDescriptor);
       ServiceRegistry.get().watch(BusDescriptor.class, new ServiceRegistry.ServicesWatch<BusDescriptor>() {
          @Override
          public void notify(Collection<BusDescriptor> busDescriptors) {
@@ -52,7 +57,7 @@ public class BusDescriptorPublisher implements BusEvents {
 
    @Override
    public void listen(Class<?> messageType) {
-      descriptor.addListener(messageType.getName(), topologyConfiguration.getLocalAddressOf(messageType).toString());
+      selfDescriptor.addListener(messageType.getName(), topologyConfiguration.getLocalAddressOf(messageType).toString());
    }
 
    @Override
@@ -62,13 +67,6 @@ public class BusDescriptorPublisher implements BusEvents {
 
    @Override
    public void stopped() {
-      ServiceRegistry.get().unpublish(descriptor);
-   }
-
-   public static class TopographerWatcher implements CuratorListener {
-      @Override
-      public void eventReceived(CuratorFramework client, CuratorEvent event) throws Exception {
-
-      }
+      ServiceRegistry.get().unpublish(selfDescriptor);
    }
 }

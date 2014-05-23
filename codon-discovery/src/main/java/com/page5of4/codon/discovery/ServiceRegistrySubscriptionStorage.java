@@ -32,6 +32,7 @@ public class ServiceRegistrySubscriptionStorage implements SubscriptionStorage {
          );
    }
 
+   @Override
    public Collection<Subscription> findAllSubscriptions() {
       Collection<Subscription> subscriptions = Lists.newArrayList();
       Collection<BusDescriptor> busDescriptors = ServiceRegistry.get().getServices(BusDescriptor.class);

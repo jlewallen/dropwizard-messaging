@@ -43,4 +43,12 @@ public class ManagedCodon implements Managed {
    public Bus getBus() {
       return applicationContext.getBean(Bus.class);
    }
+
+   public CodonHealthCheck getHealthCheck() {
+      return applicationContext.getBean(CodonHealthCheck.class);
+   }
+
+   public CodonResource getResource() {
+      return applicationContext.getBean(CodonResource.class);
+   }
 }
