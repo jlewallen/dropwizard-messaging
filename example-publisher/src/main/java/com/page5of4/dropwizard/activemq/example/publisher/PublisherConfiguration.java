@@ -22,7 +22,7 @@ public class PublisherConfiguration extends Configuration implements ConfiguresM
 
    @Override
    @JsonProperty("zookeeper")
-   public ZooKeeperConfiguration getZooKeeperConfiguration() {
+   public ZooKeeperConfiguration getZooKeeper() {
       return zooKeeperConfiguration;
    }
 

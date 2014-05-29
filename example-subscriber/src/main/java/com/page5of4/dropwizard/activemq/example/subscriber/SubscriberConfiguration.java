@@ -22,7 +22,7 @@ public class SubscriberConfiguration extends Configuration implements Configures
 
    @Override
    @JsonProperty("zookeeper")
-   public ZooKeeperConfiguration getZooKeeperConfiguration() {
+   public ZooKeeperConfiguration getZooKeeper() {
       return zooKeeperConfiguration;
    }
 

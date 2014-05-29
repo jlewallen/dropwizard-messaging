@@ -40,7 +40,7 @@ public class NonNetworkedBrokersCodonConfig extends BusConfig {
 
    @Bean
    public BusDescriptorPublisher busDescriptorPublisher(BusConfiguration busConfiguration, TopologyConfiguration topologyConfiguration, PublisherConfiguration publisherConfiguration) {
-      return new BusDescriptorPublisher(busConfiguration, topologyConfiguration, publisherConfiguration.getZooKeeperConfiguration().getCurator());
+      return new BusDescriptorPublisher(busConfiguration, topologyConfiguration, publisherConfiguration.getZooKeeper().getCurator());
    }
 
    @Override

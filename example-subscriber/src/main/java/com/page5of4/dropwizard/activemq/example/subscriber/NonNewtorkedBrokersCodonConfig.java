@@ -32,6 +32,6 @@ public class NonNewtorkedBrokersCodonConfig extends BusConfig {
 
    @Bean
    public BusDescriptorPublisher busDescriptorPublisher(BusConfiguration busConfiguration, TopologyConfiguration topologyConfiguration, SubscriberConfiguration subscriberConfiguration) {
-      return new BusDescriptorPublisher(busConfiguration, topologyConfiguration, subscriberConfiguration.getZooKeeperConfiguration().getCurator());
+      return new BusDescriptorPublisher(busConfiguration, topologyConfiguration, subscriberConfiguration.getZooKeeper().getCurator());
    }
 }

@@ -20,7 +20,7 @@ public class Main extends Application<SubscriberConfiguration> {
 
    @Override
    public void initialize(Bootstrap<SubscriberConfiguration> bootstrap) {
-      bootstrap.addBundle(new ZooKeeperBundle(false));
+      bootstrap.addBundle(new ZooKeeperBundle());
       bootstrap.addBundle(new LocalActiveMqBundle());
       bootstrap.addBundle(new CodonBundle(NetworkedBrokersCodonConfig.class, PublisherConfig.class));
    }

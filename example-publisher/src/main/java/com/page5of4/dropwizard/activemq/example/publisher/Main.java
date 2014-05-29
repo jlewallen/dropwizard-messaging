@@ -19,7 +19,7 @@ public class Main extends Application<PublisherConfiguration> {
 
    @Override
    public void initialize(Bootstrap<PublisherConfiguration> bootstrap) {
-      bootstrap.addBundle(new ZooKeeperBundle(false));
+      bootstrap.addBundle(new ZooKeeperBundle());
       bootstrap.addBundle(new LocalActiveMqBundle());
       bootstrap.addBundle(new CodonBundle(NetworkedBrokersCodonConfig.class, PublisherConfig.class));
    }
