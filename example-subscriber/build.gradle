@@ -10,8 +10,8 @@ configurations {
 }
 
 run {
-    systemProperty "dropwizard.config", "build/resources/main/activemq-subscriber.yml"
-    args "server", "build/resources/main/activemq-subscriber.yml"
+    systemProperty "dropwizard.config", "build/resources/main/subscriber.yml"
+    args "server", "build/resources/main/subscriber.yml"
 }
 
 dependencies {

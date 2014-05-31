@@ -9,11 +9,22 @@ import java.net.ServerSocket;
 
 public class BrokerConfiguration {
    @JsonProperty
+   private boolean enabled = true;
+
+   @JsonProperty
    private Integer port;
    private BrokerService broker;
 
    public BrokerConfiguration() {
       this.port = getAvailablePort();
+   }
+
+   public boolean getEnabled() {
+      return enabled;
+   }
+
+   public void setEnabled(boolean enabled) {
+      this.enabled = enabled;
    }
 
    public Integer getPort() {

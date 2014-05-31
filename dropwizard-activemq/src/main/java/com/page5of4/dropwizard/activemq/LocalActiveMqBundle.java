@@ -12,7 +12,10 @@ public class LocalActiveMqBundle implements ConfiguredBundle<ConfiguresMessageQu
 
    @Override
    public void run(ConfiguresMessageQueuing configuration, Environment environment) throws Exception {
-      environment.lifecycle().manage(new ActiveMqBroker(configuration.getBrokerConfiguration()));
-      environment.healthChecks().register("activemq", new ActiveMqHealthCheck());
+      BrokerConfiguration brokerConfiguration = configuration.getBrokerConfiguration();
+      if(brokerConfiguration.getEnabled()) {
+         environment.lifecycle().manage(new ActiveMqBroker(brokerConfiguration));
+         environment.healthChecks().register("activemq", new ActiveMqHealthCheck());
+      }
    }
 }

@@ -10,24 +10,24 @@ import com.page5of4.dropwizard.discovery.zookeeper.ZooKeeperConfiguration;
 import io.dropwizard.Configuration;
 
 public class SubscriberConfiguration extends Configuration implements ConfiguresMessageQueuing, ConfiguresCodon, ConfiguresZooKeeper {
+   @JsonProperty("broker")
    private BrokerConfiguration brokerConfiguration = new BrokerConfiguration();
+   @JsonProperty("codon")
    private CodonConfiguration codonConfiguration = new CodonConfiguration();
-   private ZooKeeperConfiguration zooKeeperConfiguration = new ZooKeeperConfiguration();
+   @JsonProperty("zookeeper")
+   private ZooKeeperConfiguration zookeeperConfiguration = new ZooKeeperConfiguration();
 
    @Override
-   @JsonProperty("broker")
    public BrokerConfiguration getBrokerConfiguration() {
       return brokerConfiguration;
    }
 
    @Override
-   @JsonProperty("zookeeper")
    public ZooKeeperConfiguration getZooKeeper() {
-      return zooKeeperConfiguration;
+      return zookeeperConfiguration;
    }
 
    @Override
-   @JsonProperty("codon")
    public CodonConfiguration getCodonConfiguration() {
       return codonConfiguration;
    }

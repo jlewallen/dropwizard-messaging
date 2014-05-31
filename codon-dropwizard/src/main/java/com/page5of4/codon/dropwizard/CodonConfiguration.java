@@ -12,6 +12,8 @@ import javax.validation.constraints.NotNull;
 import java.util.Map;
 
 public class CodonConfiguration {
+   @JsonProperty
+   private boolean enabled = true;
    @NotNull
    @JsonProperty
    private String name;
@@ -21,12 +23,12 @@ public class CodonConfiguration {
    @JsonProperty(value = "broker")
    private BrokerConfiguration brokerConfiguration = new BrokerConfiguration();
 
-   public ImmutableMap<String, String> getOwners() {
-      return owners;
+   public boolean getEnabled() {
+      return enabled;
    }
 
-   public void setOwners(ImmutableMap<String, String> owners) {
-      this.owners = owners;
+   public void setEnabled(boolean enabled) {
+      this.enabled = enabled;
    }
 
    public String getName() {
@@ -35,6 +37,14 @@ public class CodonConfiguration {
 
    public void setName(String name) {
       this.name = name;
+   }
+
+   public ImmutableMap<String, String> getOwners() {
+      return owners;
+   }
+
+   public void setOwners(ImmutableMap<String, String> owners) {
+      this.owners = owners;
    }
 
    public BrokerConfiguration getBrokerConfiguration() {
