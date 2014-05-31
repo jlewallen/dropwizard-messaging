@@ -8,11 +8,9 @@ import com.page5of4.codon.subscriptions.SubscriptionStorage;
 import com.page5of4.codon.subscriptions.messages.SubscribeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
-@Service
 @MessageHandler(autoSubscribe = AutomaticallySubscribe.NEVER)
 public class SubscribeHandler {
    private static final Logger logger = LoggerFactory.getLogger(SubscribeHandler.class);

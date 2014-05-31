@@ -3,7 +3,7 @@ package com.page5of4.codon.camel;
 import com.page5of4.codon.BusConfiguration;
 import com.page5of4.codon.BusException;
 import com.page5of4.codon.CommunicationConfiguration;
-import com.page5of4.codon.impl.TransactionConvention;
+import com.page5of4.codon.transactions.TransactionConvention;
 import org.apache.activemq.camel.component.ActiveMQConfiguration;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Component;

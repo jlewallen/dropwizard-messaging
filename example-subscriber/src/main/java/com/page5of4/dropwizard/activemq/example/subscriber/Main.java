@@ -1,6 +1,6 @@
 package com.page5of4.dropwizard.activemq.example.subscriber;
 
-import com.page5of4.codon.config.PublisherConfig;
+import com.page5of4.codon.spring.config.PublisherConfig;
 import com.page5of4.codon.dropwizard.CodonBundle;
 import com.page5of4.dropwizard.activemq.LocalActiveMqBundle;
 import com.page5of4.dropwizard.activemq.example.publisher.JolokiaInstaller;

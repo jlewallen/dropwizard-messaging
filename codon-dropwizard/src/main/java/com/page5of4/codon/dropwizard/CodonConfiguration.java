@@ -8,28 +8,23 @@ import com.page5of4.codon.PropertiesConfiguration;
 import com.page5of4.codon.utils.LocalIpAddress;
 import com.page5of4.dropwizard.activemq.BrokerConfiguration;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Map;
 
 public class CodonConfiguration {
-   @JsonProperty
-   private boolean enabled = true;
+   @Valid
    @NotNull
    @JsonProperty
    private String name;
-   @NotNull
+
+   @JsonProperty
+   private boolean enabled = true;
+
    @JsonProperty
    private ImmutableMap<String, String> owners = ImmutableMap.of();
-   @JsonProperty(value = "broker")
-   private BrokerConfiguration brokerConfiguration = new BrokerConfiguration();
 
-   public boolean getEnabled() {
-      return enabled;
-   }
-
-   public void setEnabled(boolean enabled) {
-      this.enabled = enabled;
-   }
+   private Bus bus;
 
    public String getName() {
       return name;
@@ -37,6 +32,14 @@ public class CodonConfiguration {
 
    public void setName(String name) {
       this.name = name;
+   }
+
+   public boolean getEnabled() {
+      return enabled;
+   }
+
+   public void setEnabled(boolean enabled) {
+      this.enabled = enabled;
    }
 
    public ImmutableMap<String, String> getOwners() {
@@ -47,12 +50,12 @@ public class CodonConfiguration {
       this.owners = owners;
    }
 
-   public BrokerConfiguration getBrokerConfiguration() {
-      return brokerConfiguration;
+   public Bus getBus() {
+      return bus;
    }
 
-   public void setBrokerConfiguration(BrokerConfiguration brokerConfiguration) {
-      this.brokerConfiguration = brokerConfiguration;
+   public void setBus(Bus bus) {
+      this.bus = bus;
    }
 
    public BusConfiguration createBusConfiguration(BrokerConfiguration brokerConfiguration) {
@@ -63,15 +66,5 @@ public class CodonConfiguration {
          properties.setOwner(owner.getKey(), owner.getValue());
       }
       return properties;
-   }
-
-   private Bus bus;
-
-   public Bus getBus() {
-      return bus;
-   }
-
-   public void setBus(Bus bus) {
-      this.bus = bus;
    }
 }

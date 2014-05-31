@@ -3,7 +3,7 @@ package com.page5of4.dropwizard.activemq.example.subscriber;
 import com.page5of4.codon.Bus;
 import com.page5of4.codon.BusConfiguration;
 import com.page5of4.codon.PropertiesConfiguration;
-import com.page5of4.codon.config.BusConfig;
+import com.page5of4.codon.spring.config.BusConfig;
 import com.page5of4.codon.discovery.BusDescriptorPublisher;
 import com.page5of4.codon.impl.TopologyConfiguration;
 import com.page5of4.dropwizard.discovery.LocalIpAddress;

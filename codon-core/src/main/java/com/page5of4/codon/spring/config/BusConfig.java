@@ -1,4 +1,4 @@
-package com.page5of4.codon.config;
+package com.page5of4.codon.spring.config;
 
 import com.page5of4.codon.Bus;
 import com.page5of4.codon.BusConfiguration;
@@ -17,11 +17,11 @@ import com.page5of4.codon.impl.BusContextProvider;
 import com.page5of4.codon.impl.ConstantBusContextProvider;
 import com.page5of4.codon.impl.DefaultBus;
 import com.page5of4.codon.impl.EventsCaller;
-import com.page5of4.codon.impl.NullTransactionManagerConvention;
-import com.page5of4.codon.impl.SpringApplicationContextResolver;
-import com.page5of4.codon.impl.SpringHandlerRegistry;
+import com.page5of4.codon.transactions.NullTransactionManagerConvention;
+import com.page5of4.codon.spring.SpringApplicationContextResolver;
+import com.page5of4.codon.spring.SpringHandlerRegistry;
 import com.page5of4.codon.impl.TopologyConfiguration;
-import com.page5of4.codon.impl.TransactionConvention;
+import com.page5of4.codon.transactions.TransactionConvention;
 import com.page5of4.codon.subscriptions.SubscriptionStorage;
 import com.page5of4.codon.subscriptions.impl.InMemorySubscriptionStorage;
 import org.apache.camel.spring.SpringCamelContext;

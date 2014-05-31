@@ -1,4 +1,4 @@
-package com.page5of4.codon.impl;
+package com.page5of4.codon.transactions;
 
 import com.page5of4.codon.BusException;
 import org.slf4j.Logger;

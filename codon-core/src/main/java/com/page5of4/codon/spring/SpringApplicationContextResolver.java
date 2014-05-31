@@ -1,5 +1,6 @@
-package com.page5of4.codon.impl;
+package com.page5of4.codon.spring;
 
+import com.page5of4.codon.impl.InstanceResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;

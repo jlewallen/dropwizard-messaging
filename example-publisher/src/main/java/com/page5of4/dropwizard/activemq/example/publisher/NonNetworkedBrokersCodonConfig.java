@@ -3,7 +3,7 @@ package com.page5of4.dropwizard.activemq.example.publisher;
 import com.page5of4.codon.BusConfiguration;
 import com.page5of4.codon.CommunicationConfiguration;
 import com.page5of4.codon.PropertiesConfiguration;
-import com.page5of4.codon.config.BusConfig;
+import com.page5of4.codon.spring.config.BusConfig;
 import com.page5of4.codon.discovery.BusDescriptorPublisher;
 import com.page5of4.codon.discovery.ServiceRegistryCommunicationConfiguration;
 import com.page5of4.codon.discovery.ServiceRegistrySubscriptionStorage;

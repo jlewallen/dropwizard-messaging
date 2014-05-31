@@ -2,9 +2,9 @@ package com.page5of4.codon.tests.support;
 
 import com.page5of4.codon.BusConfiguration;
 import com.page5of4.codon.PropertiesConfiguration;
-import com.page5of4.codon.config.BusConfig;
-import com.page5of4.codon.impl.JmsTransactionManagerConvention;
-import com.page5of4.codon.impl.TransactionConvention;
+import com.page5of4.codon.spring.config.BusConfig;
+import com.page5of4.codon.transactions.JmsTransactionManagerConvention;
+import com.page5of4.codon.transactions.TransactionConvention;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

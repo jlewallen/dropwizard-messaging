@@ -2,9 +2,9 @@ package com.page5of4.codon.tests.integration;
 
 import com.page5of4.codon.BusConfiguration;
 import com.page5of4.codon.PropertiesConfiguration;
-import com.page5of4.codon.config.BusConfig;
-import com.page5of4.codon.impl.JmsTransactionManagerConvention;
-import com.page5of4.codon.impl.TransactionConvention;
+import com.page5of4.codon.spring.config.BusConfig;
+import com.page5of4.codon.transactions.JmsTransactionManagerConvention;
+import com.page5of4.codon.transactions.TransactionConvention;
 import com.page5of4.codon.tests.support.EmbeddedActiveMqBrokerConfig;
 import com.page5of4.codon.tests.support.EmptyEvents;
 import org.junit.Test;

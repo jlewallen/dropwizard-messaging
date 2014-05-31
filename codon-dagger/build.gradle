@@ -1,0 +1,9 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+dependencies {
+    compile project(':codon-core')
+
+    compile "com.squareup.dagger:dagger:1.1.0"
+    compile "com.squareup.dagger:dagger-compiler:1.1.0"
+}

@@ -4,7 +4,7 @@ import com.page5of4.codon.Bus;
 import com.page5of4.codon.BusConfiguration;
 import com.page5of4.codon.Subscriber;
 import com.page5of4.codon.activmq.discovery.ActiveMqNetworkManager;
-import com.page5of4.codon.config.BusConfig;
+import com.page5of4.codon.spring.config.BusConfig;
 import com.page5of4.codon.impl.TopologyConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

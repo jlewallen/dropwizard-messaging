@@ -1,6 +1,6 @@
 package com.page5of4.codon;
 
-import com.page5of4.codon.impl.SpringHandlerRegistry;
+import com.page5of4.codon.spring.SpringHandlerRegistry;
 import org.junit.Before;
 import org.junit.Test;
 

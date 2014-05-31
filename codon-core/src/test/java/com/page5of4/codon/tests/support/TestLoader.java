@@ -1,7 +1,7 @@
 package com.page5of4.codon.tests.support;
 
 import com.page5of4.codon.BusModule;
-import com.page5of4.codon.config.PublisherConfig;
+import com.page5of4.codon.spring.config.PublisherConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;

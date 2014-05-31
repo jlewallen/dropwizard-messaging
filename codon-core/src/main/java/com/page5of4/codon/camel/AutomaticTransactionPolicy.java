@@ -1,7 +1,7 @@
 package com.page5of4.codon.camel;
 
 import com.page5of4.codon.BusConfiguration;
-import com.page5of4.codon.impl.TransactionConvention;
+import com.page5of4.codon.transactions.TransactionConvention;
 import org.apache.camel.Processor;
 import org.apache.camel.model.ProcessorDefinition;
 import org.apache.camel.spi.RouteContext;

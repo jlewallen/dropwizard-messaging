@@ -1,4 +1,4 @@
-package com.page5of4.codon.config;
+package com.page5of4.codon.spring.config;
 
 import com.page5of4.codon.subscriptions.impl.SubscribeHandler;
 import com.page5of4.codon.subscriptions.impl.UnsubscribeHandler;

@@ -1,4 +1,4 @@
-package com.page5of4.codon.impl;
+package com.page5of4.codon.transactions;
 
 import org.springframework.transaction.PlatformTransactionManager;
 

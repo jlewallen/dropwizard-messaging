@@ -1,6 +1,8 @@
-package com.page5of4.codon.impl;
+package com.page5of4.codon.spring;
 
 import com.page5of4.codon.MessageHandler;
+import com.page5of4.codon.impl.AbstractHandlerRegistry;
+import com.page5of4.codon.impl.InstanceResolver;
 import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;
