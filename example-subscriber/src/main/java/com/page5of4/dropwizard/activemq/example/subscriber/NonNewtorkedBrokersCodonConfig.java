@@ -24,7 +24,7 @@ public class NonNewtorkedBrokersCodonConfig extends BusConfig {
    @Bean
    @Override
    public BusConfiguration busConfiguration() {
-      Integer port = subscriberConfiguration.getBrokerConfiguration().getPort();
+      Integer port = subscriberConfiguration.getCodonConfiguration().getBroker().getPort();
       String localBrokerUrl = "tcp://" + LocalIpAddress.guessLocalIp().getHostAddress() + ":" + port;
       PropertiesConfiguration configuration = new PropertiesConfiguration("subscriber", localBrokerUrl);
       return configuration;

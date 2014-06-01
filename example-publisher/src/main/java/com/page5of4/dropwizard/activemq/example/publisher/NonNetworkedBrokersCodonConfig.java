@@ -22,7 +22,7 @@ public class NonNetworkedBrokersCodonConfig extends BusConfig {
    @Bean
    @Override
    public BusConfiguration busConfiguration() {
-      Integer port = publisherConfiguration.getBrokerConfiguration().getPort();
+      Integer port = publisherConfiguration.getCodonConfiguration().getBroker().getPort();
       String localBrokerUrl = "tcp://" + LocalIpAddress.guessLocalIp().getHostAddress() + ":" + port;
       final ServiceRegistryCommunicationConfiguration serviceRegistryCommunicationConfiguration = new ServiceRegistryCommunicationConfiguration();
       PropertiesConfiguration configuration = new PropertiesConfiguration("publisher", localBrokerUrl) {

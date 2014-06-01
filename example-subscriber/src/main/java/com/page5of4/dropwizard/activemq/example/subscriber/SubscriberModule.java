@@ -31,7 +31,7 @@ public class SubscriberModule {
    public SubscriberModule(SubscriberConfiguration subscriberConfiguration) {
       this.subscriberConfiguration = subscriberConfiguration;
       this.curatorFramework = subscriberConfiguration.getZooKeeper().getCurator();
-      this.brokerService = subscriberConfiguration.getBrokerConfiguration().createBroker();
+      this.brokerService = subscriberConfiguration.getCodonConfiguration().getBroker().createBroker();
    }
 
    @Provides
@@ -53,7 +53,7 @@ public class SubscriberModule {
 
    @Provides
    public BusConfiguration provideBusConfiguration() {
-      return subscriberConfiguration.getCodonConfiguration().createBusConfiguration(subscriberConfiguration.getBrokerConfiguration());
+      return subscriberConfiguration.getCodonConfiguration().createBusConfiguration();
    }
 
    @Provides

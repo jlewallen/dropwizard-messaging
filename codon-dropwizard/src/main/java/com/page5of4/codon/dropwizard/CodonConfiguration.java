@@ -1,15 +1,19 @@
 package com.page5of4.codon.dropwizard;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableMap;
-import com.page5of4.codon.Bus;
 import com.page5of4.codon.BusConfiguration;
 import com.page5of4.codon.PropertiesConfiguration;
 import com.page5of4.codon.utils.LocalIpAddress;
 import com.page5of4.dropwizard.activemq.BrokerConfiguration;
+import io.dropwizard.Configuration;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 import java.util.Map;
 
 public class CodonConfiguration {
@@ -22,9 +26,11 @@ public class CodonConfiguration {
    private boolean enabled = true;
 
    @JsonProperty
-   private ImmutableMap<String, String> owners = ImmutableMap.of();
+   private final ImmutableMap<String, String> owners = ImmutableMap.of();
 
-   private Bus bus;
+   @Valid
+   @JsonProperty("broker")
+   private final BrokerConfiguration brokerConfiguration = new BrokerConfiguration();
 
    public String getName() {
       return name;
@@ -46,25 +52,41 @@ public class CodonConfiguration {
       return owners;
    }
 
-   public void setOwners(ImmutableMap<String, String> owners) {
-      this.owners = owners;
+   public BrokerConfiguration getBroker() {
+      return brokerConfiguration;
    }
 
-   public Bus getBus() {
-      return bus;
-   }
+   private PropertiesConfiguration busConfiguration;
 
-   public void setBus(Bus bus) {
-      this.bus = bus;
-   }
-
-   public BusConfiguration createBusConfiguration(BrokerConfiguration brokerConfiguration) {
-      Integer port = brokerConfiguration.getPort();
-      String localBrokerUrl = "tcp://" + LocalIpAddress.guessLocalIp().getHostAddress() + ":" + port;
-      PropertiesConfiguration properties = new PropertiesConfiguration(getName(), localBrokerUrl);
-      for(Map.Entry<String, String> owner : getOwners().entrySet()) {
-         properties.setOwner(owner.getKey(), owner.getValue());
+   public BusConfiguration createBusConfiguration() {
+      if(busConfiguration == null) {
+         Integer port = getBroker().getPort();
+         String localBrokerUrl = "tcp://" + LocalIpAddress.guessLocalIp().getHostAddress() + ":" + port;
+         busConfiguration = new PropertiesConfiguration(getName(), localBrokerUrl);
+         for(Map.Entry<String, String> owner : getOwners().entrySet()) {
+            busConfiguration.setOwner(owner.getKey(), owner.getValue());
+         }
       }
-      return properties;
+      return busConfiguration;
+   }
+
+   private AnnotationConfigApplicationContext applicationContext;
+
+   @JsonIgnore
+   public ApplicationContext getApplicationContext() {
+      return applicationContext;
+   }
+
+   public ApplicationContext createApplicationContext(Configuration configuration, Collection<Class<?>> configurationClasses) {
+      if(applicationContext != null) {
+         throw new RuntimeException("Application context already created.");
+      }
+      applicationContext = new AnnotationConfigApplicationContext();
+      for (Class<?> configurationClass : configurationClasses) {
+         applicationContext.register(configurationClass);
+      }
+      applicationContext.getBeanFactory().registerSingleton("dropwizardConfiguration", configuration);
+      applicationContext.refresh();
+      return applicationContext;
    }
 }

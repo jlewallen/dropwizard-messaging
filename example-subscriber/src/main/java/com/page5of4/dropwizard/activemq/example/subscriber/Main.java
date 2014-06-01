@@ -2,7 +2,6 @@ package com.page5of4.dropwizard.activemq.example.subscriber;
 
 import com.page5of4.codon.dropwizard.CodonBundle;
 import com.page5of4.codon.spring.config.PublisherConfig;
-import com.page5of4.dropwizard.activemq.LocalActiveMqBundle;
 import com.page5of4.dropwizard.activemq.example.publisher.JolokiaInstaller;
 import com.page5of4.dropwizard.discovery.zookeeper.ZooKeeperBundle;
 import dagger.ObjectGraph;
@@ -22,7 +21,6 @@ public class Main extends Application<SubscriberConfiguration> {
    @Override
    public void initialize(Bootstrap<SubscriberConfiguration> bootstrap) {
       bootstrap.addBundle(new ZooKeeperBundle());
-      bootstrap.addBundle(new LocalActiveMqBundle());
       bootstrap.addBundle(new CodonBundle(NetworkedBrokersCodonConfig.class, PublisherConfig.class));
    }
 

@@ -15,11 +15,4 @@ logging:
     org.apache.activemq.network: ERROR
 
 codon:
-  enabled: false
   name: publisher
-
-broker:
-  enabled: false
-
-zookeeper:
-  enabled: false

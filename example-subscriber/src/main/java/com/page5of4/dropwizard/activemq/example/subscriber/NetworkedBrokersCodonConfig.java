@@ -22,11 +22,11 @@ public class NetworkedBrokersCodonConfig extends BusConfig {
    @Bean
    @Override
    public BusConfiguration busConfiguration() {
-      return subscriberConfiguration.getCodonConfiguration().createBusConfiguration(subscriberConfiguration.getBrokerConfiguration());
+      return subscriberConfiguration.getCodonConfiguration().createBusConfiguration();
    }
 
    @Bean
    public ActiveMqNetworkManager activeMqNetworkManager(BusConfiguration busConfiguration, SubscriberConfiguration publisherConfiguration, Subscriber subscriber) {
-      return new ActiveMqNetworkManager(busConfiguration, subscriber, publisherConfiguration.getZooKeeper().getCurator(), publisherConfiguration.getBrokerConfiguration().createBroker());
+      return new ActiveMqNetworkManager(busConfiguration, subscriber, publisherConfiguration.getZooKeeper().getCurator(), publisherConfiguration.getCodonConfiguration().getBroker().createBroker());
    }
 }

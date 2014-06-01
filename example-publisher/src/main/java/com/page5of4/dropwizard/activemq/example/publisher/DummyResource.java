@@ -4,6 +4,7 @@ import com.page5of4.codon.Bus;
 import com.page5of4.dropwizard.discovery.zookeeper.ServiceInstanceRecord;
 import com.page5of4.dropwizard.discovery.zookeeper.ServiceRegistry;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -20,6 +21,7 @@ public class DummyResource {
    private static final Random random = new Random();
    private Bus bus;
 
+   @Autowired
    public DummyResource(Bus bus) {
       this.bus = bus;
    }
