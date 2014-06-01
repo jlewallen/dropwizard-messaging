@@ -23,6 +23,7 @@ dependencies {
     compile project(':codon-dropwizard')
     compile project(':codon-discovery')
     compile project(':codon-discovery-activemq')
+    compile project(':codon-dagger')
     // Move messages to their own jar
     compile project(':example-publisher')
 

@@ -4,7 +4,6 @@ import com.page5of4.codon.BusConfiguration;
 import com.page5of4.codon.Subscriber;
 import com.page5of4.codon.activmq.discovery.ActiveMqNetworkManager;
 import com.page5of4.codon.spring.config.BusConfig;
-import com.page5of4.codon.impl.TopologyConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +20,7 @@ public class NetworkedBrokersCodonConfig extends BusConfig {
    }
 
    @Bean
-   public ActiveMqNetworkManager activeMqNetworkManager(BusConfiguration busConfiguration, TopologyConfiguration topologyConfiguration, PublisherConfiguration publisherConfiguration, Subscriber subscriber) {
-      return new ActiveMqNetworkManager(busConfiguration, topologyConfiguration, subscriber, publisherConfiguration.getZooKeeper().getCurator(), publisherConfiguration.getBrokerConfiguration().createBroker());
+   public ActiveMqNetworkManager activeMqNetworkManager(BusConfiguration busConfiguration, PublisherConfiguration publisherConfiguration, Subscriber subscriber) {
+      return new ActiveMqNetworkManager(busConfiguration, subscriber, publisherConfiguration.getZooKeeper().getCurator(), publisherConfiguration.getBrokerConfiguration().createBroker());
    }
 }

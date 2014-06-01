@@ -1,10 +1,11 @@
 package com.page5of4.dropwizard.activemq.example.subscriber;
 
-import com.page5of4.codon.spring.config.PublisherConfig;
 import com.page5of4.codon.dropwizard.CodonBundle;
+import com.page5of4.codon.spring.config.PublisherConfig;
 import com.page5of4.dropwizard.activemq.LocalActiveMqBundle;
 import com.page5of4.dropwizard.activemq.example.publisher.JolokiaInstaller;
 import com.page5of4.dropwizard.discovery.zookeeper.ZooKeeperBundle;
+import dagger.ObjectGraph;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -27,6 +28,8 @@ public class Main extends Application<SubscriberConfiguration> {
 
    @Override
    public void run(final SubscriberConfiguration configuration, final Environment environment) throws ClassNotFoundException {
+      ObjectGraph graph = ObjectGraph.create(new SubscriberModule(configuration));
+
       new JolokiaInstaller().install(environment);
       environment.jersey().register(new DummyResource());
    }

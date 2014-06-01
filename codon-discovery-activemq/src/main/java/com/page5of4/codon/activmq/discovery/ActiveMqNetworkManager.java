@@ -5,7 +5,6 @@ import com.page5of4.codon.BusConfiguration;
 import com.page5of4.codon.BusEvents;
 import com.page5of4.codon.CommunicationConfiguration;
 import com.page5of4.codon.Subscriber;
-import com.page5of4.codon.impl.TopologyConfiguration;
 import com.page5of4.dropwizard.discovery.zookeeper.ServiceRegistry;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.network.NetworkConnector;
@@ -24,7 +23,7 @@ public class ActiveMqNetworkManager implements BusEvents {
    private final CuratorFramework curator;
    private final BrokerService broker;
 
-   public ActiveMqNetworkManager(BusConfiguration busConfiguration, TopologyConfiguration topologyConfiguration, Subscriber subscriber, CuratorFramework curator, BrokerService broker) {
+   public ActiveMqNetworkManager(BusConfiguration busConfiguration, Subscriber subscriber, CuratorFramework curator, BrokerService broker) {
       this.subscriber = subscriber;
       this.curator = curator;
       this.broker = broker;
