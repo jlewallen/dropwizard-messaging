@@ -8,6 +8,7 @@ import com.page5of4.codon.PropertiesConfiguration;
 import com.page5of4.codon.utils.LocalIpAddress;
 import com.page5of4.dropwizard.activemq.BrokerConfiguration;
 import io.dropwizard.Configuration;
+import io.dropwizard.setup.Environment;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -77,7 +78,7 @@ public class CodonConfiguration {
       return applicationContext;
    }
 
-   public ApplicationContext createApplicationContext(Configuration configuration, Collection<Class<?>> configurationClasses) {
+   public ApplicationContext createApplicationContext(Configuration configuration, Environment environment, Collection<Class<?>> configurationClasses) {
       if(applicationContext != null) {
          throw new RuntimeException("Application context already created.");
       }
@@ -86,6 +87,7 @@ public class CodonConfiguration {
          applicationContext.register(configurationClass);
       }
       applicationContext.getBeanFactory().registerSingleton("dropwizardConfiguration", configuration);
+      applicationContext.getBeanFactory().registerSingleton("dropwizardEnvironment", environment);
       applicationContext.refresh();
       return applicationContext;
    }

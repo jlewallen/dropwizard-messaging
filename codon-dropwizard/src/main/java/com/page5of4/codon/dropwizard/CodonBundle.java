@@ -42,7 +42,7 @@ public class CodonBundle implements ConfiguredBundle<ConfiguresCodon> {
 
       CodonConfiguration codonConfiguration = configuration.getCodonConfiguration();
       if(codonConfiguration.getEnabled()) {
-         ApplicationContext applicationContext = codonConfiguration.createApplicationContext(Configuration.class.cast(configuration), configurationClasses);
+         ApplicationContext applicationContext = codonConfiguration.createApplicationContext(Configuration.class.cast(configuration), environment, configurationClasses);
          environment.lifecycle().manage(applicationContext.getBean(ManagedCodon.class));
          environment.jersey().register(applicationContext.getBean(CodonResource.class));
          environment.healthChecks().register("codon", applicationContext.getBean(CodonHealthCheck.class));
