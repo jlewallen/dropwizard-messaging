@@ -71,6 +71,7 @@ public class ActiveMqNetworkManager implements BusEvents {
                logger.info("Adding network connector: {} to {} ({})", url, otherBroker.getApplicationName(), otherBroker.getInstanceName());
                NetworkConnector networkConnector = broker.addNetworkConnector(url);
                networkConnector.setName(otherBroker.getInstanceName());
+               networkConnector.setBrokerName(broker.getBrokerName());
                networkConnector.start();
             }
             else {

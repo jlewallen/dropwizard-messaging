@@ -34,6 +34,6 @@ public class ActiveMqServiceDescriptor {
 
    @Override
    public String toString() {
-      return "activemq<" + getApplicationName() + ">";
+      return "activemq<" + getApplicationName() + ", " + instanceName + ", " + brokerUrl + ">";
    }
 }

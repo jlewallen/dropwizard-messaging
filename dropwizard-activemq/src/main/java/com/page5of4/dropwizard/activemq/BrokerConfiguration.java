@@ -43,6 +43,7 @@ public class BrokerConfiguration {
       if(broker == null) {
          try {
             broker = new BrokerService();
+            broker.setBrokerName(String.format("broker%d", getPort()));
             broker.addConnector(getBrokerListenUrl());
             broker.setUseJmx(true);
             broker.setPersistenceAdapter(new MemoryPersistenceAdapter());
